@@ -3,6 +3,12 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Supabase Init ---
+    // IMPORTANT: Replace with your actual Supabase project URL and anon public key
+    const supabaseUrl = 'https://eqylmnprsvewdxdsmfbl.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxeWxtbnByc3Zld2R4ZHNtZmJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MTYxMDIsImV4cCI6MjA4ODk5MjEwMn0.SROuvHM08UcxJIhIO-UZMve7ShXoWhcUFoohSl_6MB4';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
     // --- Element References ---
     const overlay = document.getElementById('modal-overlay');
     const modalPlay = document.getElementById('modal-play');
@@ -28,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Password toggles
     const toggleLoginPw = document.getElementById('toggle-login-pw');
     const toggleSignupPw = document.getElementById('toggle-signup-pw');
+    const toggleSignupConfirmPw = document.getElementById('toggle-signup-confirm-pw');
 
     // Success states
     const loginSuccess = document.getElementById('login-success');
@@ -113,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupPasswordToggle(toggleLoginPw, 'login-password');
     setupPasswordToggle(toggleSignupPw, 'signup-password');
+    setupPasswordToggle(toggleSignupConfirmPw, 'signup-confirm-password');
 
     // --- Login Form ---
     formLogin.addEventListener('submit', (e) => {
@@ -130,29 +138,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Signup Form ---
-    formSignup.addEventListener('submit', (e) => {
+    formSignup.addEventListener('submit', async (e) => {
         e.preventDefault();
         const fname = document.getElementById('signup-fname').value.trim();
         const lname = document.getElementById('signup-lname').value.trim();
         const username = document.getElementById('signup-username').value.trim();
         const email = document.getElementById('signup-email').value.trim();
-        const grade = document.getElementById('signup-grade').value;
-        const role = document.getElementById('signup-role').value;
         const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-        if (!fname || !lname || !username || !email || !grade || !role || !password) return;
+        if (!fname || !lname || !username || !email || !password || !confirmPassword) return;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match.');
+            return;
+        }
+
         if (password.length < 8) {
             alert('Password must be at least 8 characters long.');
             return;
         }
 
-        // Show success state
-        signupNameDisplay.textContent = fname;
-        formSignup.style.display = 'none';
-        modalSignup.querySelector('.modal-subtitle').style.display = 'none';
-        modalSignup.querySelector('.modal-footer-text').style.display = 'none';
-        modalSignup.querySelector('.terms-row')?.remove();
-        signupSuccess.classList.remove('hidden');
+        const submitBtn = formSignup.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Creating Account...';
+        submitBtn.disabled = true;
+
+        // 1. Validate if email already exists in the "users" table
+        const { data: existingUsers, error: checkError } = await supabase
+            .from('users')
+            .select('email')
+            .eq('email', email);
+
+        if (checkError) {
+            alert('Error checking email: ' + checkError.message);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            return;
+        }
+
+        if (existingUsers && existingUsers.length > 0) {
+            alert('This email is already registered. Try another email.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            return;
+        }
+
+        // 2. Insert all user data into the "users" table
+        const { error: insertError } = await supabase
+            .from('users')
+            .insert([{
+                firstname: fname,
+                lastname: lname,
+                username: username,
+                email: email,
+                password: password
+            }]);
+
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+
+        if (insertError) {
+            alert('Error creating account: ' + insertError.message);
+            return;
+        }
+
+        // Success: Alert the user, reset the form for the next person, and go to Login
+        alert('Registration successful! Please log in.');
+        formSignup.reset();
+        switchModal(modalSignup, modalLogin);
     });
 
     // --- Prevent default on placeholder nav links ---
