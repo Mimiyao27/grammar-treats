@@ -50,6 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // --- Index Protection ---
+    // If a user is already logged in, redirect them directly to the dashboard
+    if (localStorage.getItem('loggedInEmail')) {
+        window.location.href = 'dashboard.html';
+        return;
+    }
+
     // --- Element References ---
     const overlay = document.getElementById('modal-overlay');
     const modalPlay = document.getElementById('modal-play');
