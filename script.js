@@ -9,6 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxeWxtbnByc3Zld2R4ZHNtZmJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MTYxMDIsImV4cCI6MjA4ODk5MjEwMn0.SROuvHM08UcxJIhIO-UZMve7ShXoWhcUFoohSl_6MB4';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // --- Global UI Logic ---
+    const hamburgerBtn = document.getElementById('hamburger-menu');
+    const mainNav = document.getElementById('main-nav');
+    
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        mainNav.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+            });
+        });
+    }
+
     // --- Dashboard Logic ---
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
@@ -62,22 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalPlay = document.getElementById('modal-play');
     const modalLogin = document.getElementById('modal-login');
     const modalSignup = document.getElementById('modal-signup');
-
-    // Hamburger Menu Logic
-    const hamburgerBtn = document.getElementById('hamburger-menu');
-    const mainNav = document.getElementById('main-nav');
-    
-    if (hamburgerBtn && mainNav) {
-        hamburgerBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-        });
-        
-        mainNav.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mainNav.classList.remove('active');
-            });
-        });
-    }
 
     // Buttons
     const btnStartGame = document.getElementById('btn-start-game');
