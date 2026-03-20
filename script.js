@@ -123,18 +123,51 @@ document.addEventListener('DOMContentLoaded', () => {
     setupPasswordToggle(toggleSignupConfirmPw, 'signup-confirm-password');
 
     // --- Login Form ---
-    formLogin.addEventListener('submit', (e) => {
+    formLogin.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const username = document.getElementById('login-username').value.trim();
+        const email = document.getElementById('login-email').value.trim();
         const password = document.getElementById('login-password').value.trim();
 
-        if (!username || !password) return;
+        if (!email || !password) return;
 
-        // Show success state
-        formLogin.style.display = 'none';
-        modalLogin.querySelector('.modal-subtitle').style.display = 'none';
-        modalLogin.querySelector('.modal-footer-text').style.display = 'none';
-        loginSuccess.classList.remove('hidden');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        const submitBtn = formLogin.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Logging in...';
+        submitBtn.disabled = true;
+
+        const { data: userArray, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email);
+
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+
+        if (error) {
+            alert('Error checking credentials: ' + error.message);
+            return;
+        }
+
+        if (!userArray || userArray.length === 0) {
+            alert('email not exist');
+            return;
+        }
+
+        const user = userArray[0];
+
+        if (user.password !== password) {
+            alert('Incorrect password');
+            return;
+        }
+
+        // Success - redirect to dashboard
+        window.location.href = 'dashboard.html';
     });
 
     // --- Signup Form ---
