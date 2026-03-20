@@ -63,6 +63,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalLogin = document.getElementById('modal-login');
     const modalSignup = document.getElementById('modal-signup');
 
+    // Hamburger Menu Logic
+    const hamburgerBtn = document.getElementById('hamburger-menu');
+    const mainNav = document.getElementById('main-nav');
+    
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        mainNav.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+            });
+        });
+    }
+
     // Buttons
     const btnStartGame = document.getElementById('btn-start-game');
     const btnNotYet = document.getElementById('btn-not-yet');
