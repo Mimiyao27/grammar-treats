@@ -9,6 +9,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxeWxtbnByc3Zld2R4ZHNtZmJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MTYxMDIsImV4cCI6MjA4ODk5MjEwMn0.SROuvHM08UcxJIhIO-UZMve7ShXoWhcUFoohSl_6MB4';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // --- Dashboard Logic ---
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        // If we are on the dashboard
+        const loggedInEmail = localStorage.getItem('loggedInEmail');
+        if (!loggedInEmail) {
+            window.location.href = 'index.html';
+        } else {
+            supabase.from('users')
+                .select('*')
+                .eq('email', loggedInEmail)
+                .single()
+                .then(({ data: user, error }) => {
+                    if (error || !user) {
+                        console.error('Session user not found', error);
+                        localStorage.removeItem('loggedInEmail');
+                        window.location.href = 'index.html';
+                        return;
+                    }
+
+                    const elFname = document.getElementById('dash-firstname');
+                    const elLname = document.getElementById('dash-lastname');
+                    const elUsername = document.getElementById('dash-username');
+                    const elEmail = document.getElementById('dash-email');
+
+                    if (elFname) elFname.textContent = user.firstname;
+                    if (elLname) elLname.textContent = user.lastname;
+                    if (elUsername) elUsername.textContent = user.username;
+                    if (elEmail) elEmail.textContent = user.email;
+                });
+        }
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('loggedInEmail');
+            window.location.href = 'index.html';
+        });
+
+        // Exit early so the rest of the script (which expects index.html elements) doesn't crash!
+        return;
+    }
+
     // --- Element References ---
     const overlay = document.getElementById('modal-overlay');
     const modalPlay = document.getElementById('modal-play');
@@ -166,6 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Save only the email locally, then fetch from Supabase on dashboard
+        localStorage.setItem('loggedInEmail', user.email);
+
         // Success - redirect to dashboard
         window.location.href = 'dashboard.html';
     });
@@ -242,10 +286,11 @@ document.addEventListener('DOMContentLoaded', () => {
         switchModal(modalSignup, modalLogin);
     });
 
-    // --- Prevent default on placeholder nav links ---
+    // --- Preset Nav Links ---
     document.querySelectorAll('.nav-link').forEach(link => {
         if (!link.id.includes('login') && !link.id.includes('signup')) {
             link.addEventListener('click', (e) => e.preventDefault());
         }
     });
+
 });

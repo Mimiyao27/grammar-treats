@@ -9,8 +9,17 @@
 
 <body>
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard!</p>
+    <p>Welcome to your dashboard, <span id="dash-firstname"></span> <span id="dash-lastname"></span>!</p>
+    
+    <div>
+        <p><strong>Username:</strong> <span id="dash-username"></span></p>
+        <p><strong>Email Address:</strong> <span id="dash-email"></span></p>
+    </div>
+
     <button id="logout-btn">Logout</button>
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 </body>
 
