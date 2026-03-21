@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Global UI Logic ---
     const hamburgerBtn = document.getElementById('hamburger-menu');
     const mainNav = document.getElementById('main-nav');
-    
+
     if (hamburgerBtn && mainNav) {
         hamburgerBtn.addEventListener('click', () => {
             mainNav.classList.toggle('active');
         });
-        
+
         mainNav.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 mainNav.classList.remove('active');
@@ -57,10 +57,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         }
 
-        logoutBtn.addEventListener('click', () => {
+        const overlay = document.getElementById('modal-overlay');
+        const modalLogout = document.getElementById('modal-logout');
+        const btnNo = document.getElementById('btn-logout-no');
+        const btnYes = document.getElementById('btn-logout-yes');
+
+        function openLogoutModal() {
+            if (overlay && modalLogout) {
+                overlay.classList.add('active');
+                modalLogout.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                if (confirm('Are you sure you want to log out? yes or no')) {
+                    executeLogout();
+                }
+            }
+        }
+
+        function closeLogoutModal() {
+            if (overlay && modalLogout) {
+                overlay.classList.remove('active');
+                modalLogout.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function executeLogout() {
             localStorage.removeItem('loggedInEmail');
             window.location.href = 'index.html';
+        }
+
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openLogoutModal();
         });
+
+        // Wire the hero settings button as well to open logout modal
+        const dashSettingsBtn = document.getElementById('dash-settings-btn');
+        if (dashSettingsBtn) {
+            dashSettingsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openLogoutModal();
+            });
+        }
+
+        if (btnNo) btnNo.addEventListener('click', closeLogoutModal);
+        if (btnYes) btnYes.addEventListener('click', executeLogout);
+
+        // Close modal on overlay click
+        if (overlay) {
+            overlay.addEventListener('click', closeLogoutModal);
+        }
 
         // Exit early so the rest of the script (which expects index.html elements) doesn't crash!
         return;
@@ -219,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!userArray || userArray.length === 0) {
-            alert('email not exist');
+            alert("email doesn't exist");
             return;
         }
 
