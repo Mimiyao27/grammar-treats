@@ -25,6 +25,11 @@
     --font-display: 'Fredoka One', cursive;
     --font-body: 'Nunito', sans-serif;
     --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+
+    --accent-red: #e74c3c;
+    --accent-green: #7ac142;
+    --accent-orange: #f19e38;
+    --accent-cyan: #00b4d8;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -307,4 +312,181 @@ img { max-width: 100%; height: auto; }
     .feature-label { display:none; }
     .feature-chip { padding:8px 12px; }
     .feature-icon { font-size:1.3rem; }
+    
+    .dash-logo .logo-grammar { font-size: 3rem; }
+    .dash-logo .logo-treats { font-size: 1.8rem; }
+    .btn-dash { padding: 14px 24px; font-size: 1.1rem; }
+    .btn-start { padding: 18px 36px; font-size: 1.3rem; }
+}
+
+/* ==========================================
+   Dashboard Hero Styles
+   ========================================== */
+.dashboard-hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+    background-color: var(--bg-cream);
+    /* Simple seamless pattern resembling school doodles */
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%233B5998' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.08'%3E%3Cpath d='M20 20 L40 40 M20 40 L40 20'/%3E%3Ccircle cx='90' cy='30' r='10'/%3E%3Crect x='30' y='80' width='30' height='20' rx='2'/%3E%3Cpath d='M35 85 L55 85 M35 90 L55 90 M35 95 L55 95'/%3E%3Cpolygon points='90,80 105,105 75,105'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px;
+    background-repeat: repeat;
+}
+
+/* User Badge */
+.user-badge {
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    background: var(--blue);
+    color: var(--white);
+    padding: 8px 24px;
+    border-radius: var(--radius-xl);
+    border: 4px solid var(--white);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    z-index: 10;
+}
+.badge-welcome {
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+}
+.badge-username {
+    font-weight: 600;
+}
+
+/* Dashboard Logo */
+.dash-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+    z-index: 5;
+}
+.dash-logo .logo-grammar {
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    color: var(--blue);
+    line-height: 1;
+    font-style: italic;
+}
+.logo-treats-wrapper {
+    position: relative;
+    margin-top: -10px;
+    margin-left: 60px;
+}
+.dash-logo .logo-treats {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--white);
+    background: var(--blue);
+    padding: 4px 16px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 4px;
+    box-shadow: var(--shadow-sm);
+}
+.logo-abcde {
+    position: absolute;
+    left: -65px;
+    bottom: 5px;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    transform: rotate(-10deg);
+    letter-spacing: 1px;
+    background: transparent;
+}
+
+/* Dashboard Menu */
+.dash-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+    z-index: 5;
+}
+.dash-menu-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.btn-dash {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1.3rem;
+    font-weight: 800;
+    padding: 16px 40px;
+    border-radius: var(--radius-xl);
+    border: 5px solid var(--white);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    transition: all var(--transition);
+}
+.btn-dash:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 rgba(0,0,0,0.15);
+}
+.btn-dash:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 rgba(0,0,0,0.1);
+}
+.btn-start {
+    background: var(--accent-green);
+    font-size: 1.6rem;
+    padding: 20px 60px;
+    width: 100%;
+    max-width: 400px;
+}
+.btn-leaderboard {
+    background: var(--accent-orange);
+}
+.btn-howtoplay {
+    background: var(--accent-cyan);
+}
+
+/* Settings Button */
+.btn-settings {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    background: transparent;
+    color: var(--blue);
+    border-radius: 50%;
+    transition: all var(--transition);
+    z-index: 10;
+}
+.btn-settings:hover {
+    transform: rotate(90deg) scale(1.1);
+    color: var(--blue-dark);
+}
+
+/* Dashboard Responsive */
+@media (max-width: 768px) {
+    .user-badge {
+        top: 90px;
+        left: 20px;
+        font-size: 0.9rem;
+        padding: 6px 16px;
+    }
+    .btn-settings {
+        bottom: 20px;
+        right: 20px;
+    }
+    .dash-menu-row {
+        flex-direction: column;
+        gap: 16px;
+    }
 }
