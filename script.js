@@ -355,6 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalPlay = document.getElementById('modal-play');
     const modalLogin = document.getElementById('modal-login');
     const modalSignup = document.getElementById('modal-signup');
+    const modalForgotPw = document.getElementById('modal-forgot-pw');
 
     // Buttons
     const btnStartGame = document.getElementById('btn-start-game');
@@ -365,17 +366,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const closePlay = document.getElementById('close-play');
     const closeLogin = document.getElementById('close-login');
     const closeSignup = document.getElementById('close-signup');
+    const closeForgotPw = document.getElementById('close-forgot-pw');
     const loginToSignup = document.getElementById('login-to-signup');
     const signupToLogin = document.getElementById('signup-to-login');
+    const openForgotPw = document.getElementById('open-forgot-pw');
+    const forgotToLogin = document.getElementById('forgot-to-login');
 
     // Forms
     const formLogin = document.getElementById('form-login');
     const formSignup = document.getElementById('form-signup');
+    const formForgotPw = document.getElementById('form-forgot-pw');
+    const formResetPw = document.getElementById('form-reset-pw');
+    const modalResetPw = document.getElementById('modal-reset-pw');
 
     // Password toggles
     const toggleLoginPw = document.getElementById('toggle-login-pw');
     const toggleSignupPw = document.getElementById('toggle-signup-pw');
     const toggleSignupConfirmPw = document.getElementById('toggle-signup-confirm-pw');
+    const toggleResetPw = document.getElementById('toggle-reset-pw');
 
     // Success states
     const loginSuccess = document.getElementById('login-success');
@@ -390,8 +398,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeAllModals() {
-        overlay.classList.remove('active');
-        [modalPlay, modalLogin, modalSignup].forEach(m => m.classList.remove('active'));
+        if (overlay) overlay.classList.remove('active');
+        [modalPlay, modalLogin, modalSignup, modalForgotPw, modalResetPw].forEach(m => {
+            if (m) m.classList.remove('active');
+        });
         document.body.style.overflow = '';
     }
 
@@ -418,28 +428,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Close buttons
-    closePlay.addEventListener('click', closeAllModals);
-    closeLogin.addEventListener('click', closeAllModals);
-    closeSignup.addEventListener('click', closeAllModals);
+    if (closePlay) closePlay.addEventListener('click', closeAllModals);
+    if (closeLogin) closeLogin.addEventListener('click', closeAllModals);
+    if (closeSignup) closeSignup.addEventListener('click', closeAllModals);
+    if (closeForgotPw) closeForgotPw.addEventListener('click', closeAllModals);
 
     // "Not yet" button closes play modal
-    btnNotYet.addEventListener('click', closeAllModals);
+    if (btnNotYet) btnNotYet.addEventListener('click', closeAllModals);
 
     // "Let's Go" button - show signup
-    btnLetsGo.addEventListener('click', () => {
-        switchModal(modalPlay, modalSignup);
-    });
+    if (btnLetsGo) {
+        btnLetsGo.addEventListener('click', () => {
+            switchModal(modalPlay, modalSignup);
+        });
+    }
 
     // Switch between login and signup
-    loginToSignup.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchModal(modalLogin, modalSignup);
-    });
+    if (loginToSignup) {
+        loginToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchModal(modalLogin, modalSignup);
+        });
+    }
 
-    signupToLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchModal(modalSignup, modalLogin);
-    });
+    if (signupToLogin) {
+        signupToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchModal(modalSignup, modalLogin);
+        });
+    }
+    
+    // Switch for forgot password
+    if (openForgotPw) {
+        openForgotPw.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchModal(modalLogin, modalForgotPw);
+        });
+    }
+    
+    if (forgotToLogin) {
+        forgotToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchModal(modalForgotPw, modalLogin);
+        });
+    }
 
     // Overlay click closes all modals
     overlay.addEventListener('click', closeAllModals);
@@ -462,6 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupPasswordToggle(toggleLoginPw, 'login-password');
     setupPasswordToggle(toggleSignupPw, 'signup-password');
     setupPasswordToggle(toggleSignupConfirmPw, 'signup-confirm-password');
+    if (toggleResetPw) setupPasswordToggle(toggleResetPw, 'reset-pw-new');
 
     // --- Login Form ---
     formLogin.addEventListener('submit', async (e) => {
@@ -482,33 +515,21 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.textContent = 'Logging in...';
         submitBtn.disabled = true;
 
-        const { data: userArray, error } = await supabase
-            .from('users')
-            .select('*')
-            .eq('email', email);
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
 
         if (error) {
-            alert('Error checking credentials: ' + error.message);
-            return;
-        }
-
-        if (!userArray || userArray.length === 0) {
-            alert("email doesn't exist");
-            return;
-        }
-
-        const user = userArray[0];
-
-        if (user.password !== password) {
-            alert('Incorrect password');
+            alert('Login failed: ' + error.message);
             return;
         }
 
         // Save only the email locally, then fetch from Supabase on dashboard
-        localStorage.setItem('loggedInEmail', user.email);
+        localStorage.setItem('loggedInEmail', email);
 
         // Success - redirect to dashboard
         window.location.href = 'dashboard.html';
@@ -541,43 +562,42 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.textContent = 'Creating Account...';
         submitBtn.disabled = true;
 
-        // 1. Validate if email already exists in the "users" table
-        const { data: existingUsers, error: checkError } = await supabase
-            .from('users')
-            .select('email')
-            .eq('email', email);
+        // 1. Create user in Supabase Auth
+        const { data, error: signUpError } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    firstname: fname,
+                    lastname: lname,
+                    username: username
+                }
+            }
+        });
 
-        if (checkError) {
-            alert('Error checking email: ' + checkError.message);
+        if (signUpError) {
+            alert('Error creating account: ' + signUpError.message);
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
             return;
         }
 
-        if (existingUsers && existingUsers.length > 0) {
-            alert('This email is already registered. Try another email.');
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            return;
-        }
-
-        // 2. Insert all user data into the "users" table
+        // 2. Insert all user data into the "users" table without storing passwords
         const { error: insertError } = await supabase
             .from('users')
             .insert([{
                 firstname: fname,
                 lastname: lname,
                 username: username,
-                email: email,
-                password: password
+                email: email
             }]);
 
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
 
         if (insertError) {
-            alert('Error creating account: ' + insertError.message);
-            return;
+            // Note: In production you might want to handle this gracefully
+            console.error('Error adding user to public table: ', insertError.message);
         }
 
         // Success: Alert the user, reset the form for the next person, and go to Login
@@ -585,6 +605,78 @@ document.addEventListener('DOMContentLoaded', () => {
         formSignup.reset();
         switchModal(modalSignup, modalLogin);
     });
+
+    // --- Auth State Change Listener (for password recovery) ---
+    supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event == 'PASSWORD_RECOVERY') {
+            closeAllModals();
+            if (overlay && modalResetPw) {
+                overlay.classList.add('active');
+                modalResetPw.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+    });
+
+    if (formResetPw) {
+        formResetPw.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('reset-pw-new').value;
+            if (!newPassword || newPassword.length < 8) return;
+
+            const submitBtn = formResetPw.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            const { data, error } = await supabase.auth.updateUser({
+                password: newPassword
+            });
+
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+
+            if (error) {
+                alert('Error updating password: ' + error.message);
+                return;
+            }
+
+            alert('Password successfully updated! You can now log in.');
+            formResetPw.reset();
+            switchModal(modalResetPw, modalLogin);
+        });
+    }
+
+    // --- Forgot Password Form ---
+    if (formForgotPw) {
+        formForgotPw.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('forgot-pw-email').value.trim();
+
+            if (!email) return;
+
+            const submitBtn = formForgotPw.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + window.location.pathname
+            });
+
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+
+            if (error) {
+                alert('Error sending reset link: ' + error.message);
+                return;
+            }
+
+            alert('Password reset link sent! Please check your email inbox (and spam folder).');
+            formForgotPw.reset();
+            switchModal(modalForgotPw, modalLogin);
+        });
+    }
 
     // --- Preset Nav Links ---
     document.querySelectorAll('.nav-link').forEach(link => {

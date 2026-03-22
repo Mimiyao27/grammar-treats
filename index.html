@@ -232,7 +232,7 @@
                     </svg>
                 </button>
             </div>
-            <a href="#" class="forgot-password">Forgot password?</a>
+            <a href="#" id="open-forgot-pw" class="forgot-password">Forgot password?</a>
             <button type="submit" class="btn-primary btn-full">Log in</button>
         </form>
         <p class="modal-footer-text">Don't have an account? <a href="#" id="login-to-signup" class="link-accent">Sign up
@@ -340,6 +340,56 @@
             <h3>You're in!</h3>
             <p>Welcome to Grammar Treats, <span id="signup-name-display"></span>! Start collecting treats now.</p>
         </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal modal-forgot-pw" id="modal-forgot-pw">
+        <button class="modal-close" id="close-forgot-pw" aria-label="Close modal">&times;</button>
+        <div class="modal-header-brand">
+            <span class="brand-grammar">grammar</span>
+            <span class="brand-treats">TREATS</span>
+        </div>
+        <p class="modal-subtitle">Reset your password 🔒</p>
+
+        <form class="form-forgot-pw" id="form-forgot-pw">
+            <label class="form-label" for="forgot-pw-email">EMAIL ADDRESS</label>
+            <div class="input-group">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="#999">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+                <input type="email" id="forgot-pw-email" placeholder="Enter your email" required>
+            </div>
+            
+            <br>
+            <button type="submit" class="btn-primary btn-full">Send Reset Link</button>
+        </form>
+        <p class="modal-footer-text">Remembered it? <a href="#" id="forgot-to-login" class="link-accent">Log in</a></p>
+    </div>
+
+    <!-- Set New Password Modal (for email recovery) -->
+    <div class="modal modal-reset-pw" id="modal-reset-pw">
+        <div class="modal-header-brand">
+            <span class="brand-grammar">grammar</span>
+            <span class="brand-treats">TREATS</span>
+        </div>
+        <p class="modal-subtitle">Set a New Password 🔒</p>
+
+        <form class="form-reset-pw" id="form-reset-pw">
+            <label class="form-label" for="reset-pw-new">NEW PASSWORD</label>
+            <div class="input-group">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="#999">
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                </svg>
+                <input type="password" id="reset-pw-new" placeholder="At least 8 characters" required minlength="8">
+                <button type="button" class="toggle-password" id="toggle-reset-pw" aria-label="Show password">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#999">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                    </svg>
+                </button>
+            </div>
+            <br>
+            <button type="submit" class="btn-primary btn-full">Save New Password</button>
+        </form>
     </div>
 
     <!-- Supabase JS -->
