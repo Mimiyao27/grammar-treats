@@ -261,6 +261,15 @@ img { max-width: 100%; height: auto; }
 .hamburger-menu:hover {
     background: rgba(255,255,255,0.1);
 }
+.hamburger-menu .icon-close {
+    display: none;
+}
+.hamburger-menu.is-active .icon-hamburger {
+    display: none;
+}
+.hamburger-menu.is-active .icon-close {
+    display: block;
+}
 
 /* --- Responsive --- */
 @media (max-width:900px) {

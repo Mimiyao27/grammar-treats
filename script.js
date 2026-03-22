@@ -15,12 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (hamburgerBtn && mainNav) {
         hamburgerBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
+            const isActive = mainNav.classList.toggle('active');
+            hamburgerBtn.classList.toggle('is-active', isActive);
         });
 
         mainNav.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 mainNav.classList.remove('active');
+                hamburgerBtn.classList.remove('is-active');
             });
         });
     }
