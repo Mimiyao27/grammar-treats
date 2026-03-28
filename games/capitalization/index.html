@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capitalization Game | Grammar Treats</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../capitalization.css">
+</head>
+<body class="game-body">
+    <div class="game-container">
+        <!-- Floating Doodles -->
+        <div class="doodles" aria-hidden="true">
+            <!-- (Re-using some from main styles) -->
+        </div>
+
+        <header class="game-header-top">
+            <h1 class="question-tracker">QUESTION <span id="current-q">1</span> of <span id="total-q">10</span></h1>
+            <p class="instruction">Tap a candy and type the word again with the <span class="highlight">correct capitalization</span> to complete the sentence.</p>
+        </header>
+
+        <main class="game-main">
+            <div class="sentence-box">
+                <div class="word-grid" id="word-grid">
+                    <!-- Words will be injected here -->
+                </div>
+            </div>
+
+            <button class="btn-submit" id="btn-submit">Submit</button>
+        </main>
+
+        <footer class="game-footer">
+            <button class="btn-back" id="btn-back" title="Back to Dashboard">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </button>
+        </footer>
+
+        <!-- Modal for Typing -->
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-type" id="modal-type">
+            <h3 class="modal-title">Correct the Word</h3>
+            <div class="candy-display" id="candy-display">🍬</div>
+            <p id="word-to-correct" class="word-original">word</p>
+            <input type="text" id="type-input" placeholder="Enter corrected word" autocomplete="off">
+            <div class="modal-actions">
+                <button id="btn-cancel">Cancel</button>
+                <button id="btn-done">Done</button>
+            </div>
+        </div>
+
+        </div>
+
+        <!-- Feedback UI -->
+        <div id="feedback-overlay" class="feedback-overlay hidden">
+            <h2 id="feedback-title" class="feedback-main-title">Awesome job!</h2>
+            <div class="feedback-card">
+                <p id="feedback-subtitle" class="feedback-subtitle">You deserve these chocolates!</p>
+                <div id="feedback-visual" class="feedback-visual">🍫</div>
+                
+                <div class="score-pill-wrapper">
+                    <span class="score-pill">Score: <span id="feedback-score">100</span></span>
+                    <span class="score-pill">Treats: <span id="feedback-treats">0</span> 🍬</span>
+                </div>
+
+                <div id="feedback-correct-sentence" class="sentence-result-pill">
+                    <!-- Correct sentence will go here -->
+                </div>
+
+                <p id="feedback-explanation" class="feedback-explanation">
+                    <!-- Explanation will go here -->
+                </p>
+            </div>
+            <button id="btn-next" class="btn-next">Next Question</button>
+        </div>
+    </div>
+
+        <!-- Results Screen UI -->
+        <div id="results-overlay" class="results-overlay hidden">
+            <h2 class="results-main-title">Great job, Player!</h2>
+            <p class="results-subtitle">You've completed the first round of Grammar Treats!</p>
+            
+            <div class="results-card">
+                <div class="results-stats">
+                    <p class="stat-row">Total Score: <span id="final-total-score">1/10</span></p>
+                    <p class="stat-row">Points Earned: <span id="final-points">100</span></p>
+                    <p class="stat-row">Treats Earned: <span id="final-treats">3 🍬</span></p>
+                    
+                    <p id="final-motivation" class="motivational-text">Keep practicing — every great reader started just like you! 💪</p>
+                    <a href="javascript:void(0)" id="btn-review" class="review-link">Review Incorrect Answers</a>
+                </div>
+                
+                <div class="results-chart">
+                    <div id="pie-chart" class="pie-chart"></div>
+                </div>
+            </div>
+            
+            <div class="results-actions">
+                <button id="btn-save-score" class="btn-save-score">Save Score</button>
+                <button id="btn-next-level" class="btn-next-level">Next Level</button>
+            </div>
+
+            <!-- Bottom Nav duplicate for results -->
+            <div class="results-footer">
+                <button class="btn-back" onclick="window.location.href='/dashboard/'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Review Overlay UI -->
+        <div id="review-overlay" class="review-overlay hidden">
+            <h2 class="results-main-title">Review Result</h2>
+            <div class="review-list" id="review-list">
+                <!-- Review items will be injected here -->
+            </div>
+            <button id="btn-close-review" class="btn-next">Close Review</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="../capitalization.js"></script>
+
+    <!-- Settings Wrapper duplicated from Dashboard -->
+    <div class="settings-wrapper">
+        <button class="btn-settings" id="btn-settings" title="Settings" aria-label="Settings">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c-0.24,0-0.43,0.17-0.47,0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+            </svg>
+        </button>
+        <div class="settings-popover" id="settings-popover">
+            <div class="settings-item">
+                <div class="settings-info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                    </svg>
+                    <span>Sound</span>
+                </div>
+                <div class="settings-control">
+                    <input type="range" id="settings-sound" class="settings-slider" min="0" max="100" value="50">
+                </div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                    </svg>
+                    <span>BGM</span>
+                </div>
+                <div class="settings-control">
+                    <input type="range" id="settings-bgm" class="settings-slider" min="0" max="100" value="50">
+                </div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" />
+                    </svg>
+                    <span>Mode</span>
+                </div>
+                <div class="settings-control" style="justify-content: flex-start; padding-left: 10px;">
+                    <label class="settings-toggle">
+                        <input type="checkbox" id="settings-mode-switch">
+                        <span class="toggle-slider-round"></span>
+                        <span class="toggle-icon toggle-icon-moon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--blue-dark)">
+                                <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" />
+                            </svg>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

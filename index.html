@@ -7,11 +7,7 @@
     <meta name="description"
         content="Grammar Treats - An interactive web game designed to help students improve their grammar skills through quick challenges and engaging questions.">
     <title>Grammar Treats</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -53,9 +49,9 @@
     <!-- Header -->
     <header class="header" id="header">
         <div class="header-inner">
-            <a href="#" class="logo" id="logo">
-                <span class="logo-grammar">grammar</span>
-                <span class="logo-treats">TREATS</span>
+            <a href="/" class="logo" id="logo">
+                <!-- <span class="logo-grammar">grammar</span>
+                <span class="logo-treats">TREATS</span> -->
             </a>
 
             <!-- Hamburger Menu Button -->
@@ -117,10 +113,11 @@
         <div class="hero-content">
             <div class="hero-text">
                 <p class="hero-welcome">Welcome to</p>
-                <h1 class="hero-title">
-                    <span class="title-grammar">grammar</span>
-                    <span class="title-treats">TREATS</span>
-                </h1>
+                <div class="hero-title">
+                    <img src="assets/images/logo-bg1.png" alt="">
+                    <!-- <span class="title-grammar">grammar</span>
+                    <span class="title-treats">TREATS</span> -->
+                </div>
                 <p class="hero-tagline">Learning grammar doesn't have to be boring—it can be fun and rewarding!</p>
                 <p class="hero-description">Grammar Treats is an interactive web game designed to help students improve
                     their grammar skills through quick challenges and engaging questions.</p>
@@ -151,8 +148,8 @@
                             fill="#FFD700" />
                     </svg>
                 </div>
-                <img src="https://grammar-treats.netlify.app/students.png"
-                    alt="Students learning grammar with fun treats" class="hero-img" id="hero-img">
+                <img src="./assets/images/hero-img.png" alt="Students learning grammar with fun treats" class="hero-img"
+                    id="hero-img">
             </div>
         </div>
     </main>
@@ -360,11 +357,12 @@
             <label class="form-label" for="forgot-pw-email">EMAIL ADDRESS</label>
             <div class="input-group">
                 <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="#999">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    <path
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                 </svg>
                 <input type="email" id="forgot-pw-email" placeholder="Enter your email" required>
             </div>
-            
+
             <br>
             <button type="submit" class="btn-primary btn-full">Send Reset Link</button>
         </form>
@@ -383,12 +381,14 @@
             <label class="form-label" for="reset-pw-new">NEW PASSWORD</label>
             <div class="input-group">
                 <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="#999">
-                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                    <path
+                        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
                 </svg>
                 <input type="password" id="reset-pw-new" placeholder="At least 8 characters" required minlength="8">
                 <button type="button" class="toggle-password" id="toggle-reset-pw" aria-label="Show password">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="#999">
-                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
                     </svg>
                 </button>
             </div>
@@ -399,7 +399,7 @@
 
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

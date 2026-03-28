@@ -1,0 +1,7 @@
+/index.html / 200
+/index / 200
+/dashboard.html /dashboard 301
+/dashboard /dashboard.html 200
+/games/capitalization.html /games/capitalization 301
+/games/capitalization /games/capitalization.html 200
+/* /index.html 200
