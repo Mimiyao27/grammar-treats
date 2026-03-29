@@ -467,12 +467,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Success: If email confirmation is disabled in Supabase, data.session will exist
-        if (data.session) {
-            localStorage.setItem('loggedInEmail', email);
-            alert('Registration successful! Welcome to Grammar Treats.');
-            window.location.href = '/dashboard/';
+        // Success: Show success message UI and then switch to login modal
+        formSignup.style.display = 'none';
+        const modalSubtitle = modalSignup.querySelector('.modal-subtitle');
+        if (modalSubtitle) modalSubtitle.style.display = 'none';
+
+        const modalFooter = modalSignup.querySelector('.modal-footer-text');
+        if (modalFooter) modalFooter.style.display = 'none';
+
+        if (signupSuccess) {
+            signupSuccess.classList.remove('hidden');
+            if (signupNameDisplay) signupNameDisplay.textContent = fname;
+
+            // Wait 3 seconds before switching to the login modal
+            setTimeout(() => {
+                formSignup.reset();
+                formSignup.style.display = '';
+                if (modalSubtitle) modalSubtitle.style.display = '';
+                if (modalFooter) modalFooter.style.display = '';
+                signupSuccess.classList.add('hidden');
+                switchModal(modalSignup, modalLogin);
+            }, 3000);
         } else {
-            // This fallback handles cases where email confirmation is still enabled
+            // Basic fallback
             alert('Registration successful! Please log in.');
             formSignup.reset();
             switchModal(modalSignup, modalLogin);
@@ -530,24 +547,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const submitBtn = formForgotPw.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
+            submitBtn.textContent = 'Verifying...';
             submitBtn.disabled = true;
 
-            const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.origin + window.location.pathname
-            });
+            try {
+                // 1. Check if email exists in our "users" table
+                const { data: userData, error: userError } = await supabase
+                    .from('users')
+                    .select('email')
+                    .eq('email', email)
+                    .maybeSingle();
 
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
+                if (userError) throw userError;
 
-            if (error) {
-                alert('Error sending reset link: ' + error.message);
-                return;
+                if (!userData) {
+                    alert('This email address is not registered. Please check the spelling or sign up for a new account.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // 2. If registered, send the reset link
+                submitBtn.textContent = 'Sending...';
+                const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + window.location.pathname
+                });
+
+                if (resetError) throw resetError;
+
+                alert('A password reset link has been sent to your email! Please check your inbox.');
+                formForgotPw.reset();
+                switchModal(modalForgotPw, modalLogin);
+
+            } catch (err) {
+                alert('Oops! ' + (err.message || 'An error occurred. Please try again later.'));
+                console.error('Password reset error:', err);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
-
-            alert('Password reset link sent! Please check your email inbox (and spam folder).');
-            formForgotPw.reset();
-            switchModal(modalForgotPw, modalLogin);
         });
     }
 

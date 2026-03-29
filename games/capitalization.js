@@ -309,6 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isCorrect) {
             totalScore += 100;
             questionsCorrectCount++;
+            totalTreats += 2; // Flat 2 treats for correct answer
+            earnedTreatsThisRound = 2;
 
             // Play correct sound
             if (correctSound) {
@@ -327,6 +329,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         } else {
+            totalTreats += 1; // Flat 1 treat for incorrect answer
+            earnedTreatsThisRound = 1;
+
             // Play incorrect sound
             if (incorrectSound) {
                 incorrectSound.currentTime = 0;
@@ -340,8 +345,6 @@ document.addEventListener('DOMContentLoaded', () => {
             correctSentence: q.correct.join(' '),
             explanation: q.explanation
         });
-
-        totalTreats += earnedTreatsThisRound;
 
         showFeedback(isCorrect, isCorrect ? 100 : 0, earnedTreatsThisRound);
     };
@@ -394,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
             feedbackVisual.innerText = randomRetry.visual;
         }
 
-        feedbackScore.innerText = (earnedScore > 0 ? "+ " : "") + earnedScore;
+        feedbackScore.innerText = (earnedScore > 0 ? "+" : "") + earnedScore;
         feedbackTreats.innerText = earnedTreats;
         feedbackCorrectSentence.innerText = fullCorrectSentence;
         feedbackExplanation.innerText = q.explanation;
@@ -550,6 +553,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     btnNextLevel.onclick = () => {
+        // Unlock Level 2 progress
+        localStorage.setItem('unlockedLevel', '2');
+        // Save latest stats to show on dashboard
+        localStorage.setItem('latestScore', totalScore);
+        localStorage.setItem('latestTreats', totalTreats);
+        // Set flag to show level selection on dashboard
+        localStorage.setItem('showLevelScreen', 'true');
         // Return to dashboard
         window.location.href = '/dashboard/';
     };
