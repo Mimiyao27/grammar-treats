@@ -1,11 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    // Supabase Init
+    const supabaseUrl = 'https://eqylmnprsvewdxdsmfbl.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxeWxtbnByc3Zld2R4ZHNtZmJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MTYxMDIsImV4cCI6MjA4ODk5MjEwMn0.SROuvHM08UcxJIhIO-UZMve7ShXoWhcUFoohSl_6MB4';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
     // Elements
     const balloons = document.querySelectorAll('.balloon');
     const timerDisplay = document.querySelector('.timer-display');
     const sentenceBox = document.querySelector('.sentence-box');
     const questionTracker = document.querySelector('.question-tracker');
     const btnBack = document.getElementById('btn-back');
+    const btnSaveScore = document.getElementById('btn-save-score');
     
     // Audio and Settings Elements
     const btnSettings = document.getElementById('btn-settings');
@@ -39,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         incorrectSound = new Audio('../../assets/audio/incorrect.wav');
         incorrectSound.volume = savedSound / 100;
 
-        popSound = new Audio('../../assets/audio/click.wav');
+        popSound = new Audio('../../assets/audio/balloon pop.mp3');
         popSound.volume = savedSound / 100;
 
         // Apply saved settings to UI
@@ -511,8 +517,73 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnNextRound) {
         btnNextRound.addEventListener('click', () => {
             localStorage.setItem('showLevelScreen', 'true');
+            // Unlock level 3 when next round is clicked
+            const currentUnlocked = parseInt(localStorage.getItem('unlockedLevel') || '1');
+            if (currentUnlocked < 3) {
+                localStorage.setItem('unlockedLevel', '3');
+            }
             window.location.href = '/dashboard/';
         });
+    }
+
+    if (btnSaveScore) {
+        btnSaveScore.onclick = async () => {
+            const loggedInEmail = localStorage.getItem('loggedInEmail');
+            if (!loggedInEmail) {
+                alert("Warning: No user found. Score cannot be saved unless you are logged in.");
+                return;
+            }
+
+            const accuracy = Math.round((correctAnswersCount / 10) * 100);
+
+            try {
+                // Check if user already has a score saved for Level 2
+                const { data: existingData, error: fetchError } = await supabase
+                    .from('lvl2_scores')
+                    .select('*')
+                    .eq('user_email', loggedInEmail)
+                    .maybeSingle();
+
+                if (fetchError) throw fetchError;
+
+                if (existingData) {
+                    const message = `You already have a saved score for Level 2:\n` +
+                        `Previous: Points: ${existingData.points}, Treats: ${existingData.treats}, Accuracy: ${existingData.accuracy}%\n` +
+                        `New: Points: ${totalScore}, Treats: ${totalTreats}, Accuracy: ${accuracy}%\n\n` +
+                        `Do you want to overwrite your previous record with this new one?`;
+
+                    if (confirm(message)) {
+                        const { error: updateError } = await supabase
+                            .from('lvl2_scores')
+                            .update({
+                                points: totalScore,
+                                treats: totalTreats,
+                                accuracy: accuracy
+                            })
+                            .eq('user_email', loggedInEmail);
+
+                        if (updateError) throw updateError;
+                        alert("Success! Your score has been updated! 🏆");
+                    }
+                } else {
+                    const { error: insertError } = await supabase
+                        .from('lvl2_scores')
+                        .insert([{
+                            user_email: loggedInEmail,
+                            points: totalScore,
+                            treats: totalTreats,
+                            accuracy: accuracy
+                        }]);
+
+                    if (insertError) throw insertError;
+                    alert("Congrats! Your Level 2 results have been saved! 🏆");
+                }
+                console.log("Stats processed successfully for lvl2_scores!");
+            } catch (err) {
+                alert("Oops! There was a problem saving your score: " + (err.message || "Unknown Error"));
+                console.error("Error saving stats:", err);
+            }
+        };
     }
 
     // Initialize first question

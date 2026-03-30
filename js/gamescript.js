@@ -12,6 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameScreenV2 = document.getElementById("game-screen-v2");
   const gsBtnBack = document.getElementById("gs-btn-back");
 
+  function triggerConfetti() {
+    if (typeof confetti === 'function') {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#5fb871', '#619bdc', '#FFD700', '#f87171'],
+        zIndex: 1000
+      });
+    }
+  }
+
   // Show Level Screen when "Start Game" is clicked on Dashboard
   if (dashBtnStart && levelScreen) {
     dashBtnStart.addEventListener("click", (e) => {
@@ -58,27 +70,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  if (unlockedLevel >= 3 && level3Btn) {
+    level3Btn.classList.remove("locked");
+    level3Btn.disabled = false;
+    const lockIcon = level3Btn.querySelector(".lock-icon");
+    if (lockIcon) {
+      lockIcon.outerHTML = `
+        <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      `;
+    }
+  }
+
   // Auto-show level selection if flag is set
   if (showLevelScreenFlag === "true" && levelScreen) {
     levelScreen.style.display = "flex";
     document.body.style.overflow = "hidden";
     
-    // Play unlock animation on Level 2 if it's newly unlocked
-    if (unlockedLevel >= 2 && level2Btn) {
+    // Play unlock animation for newest unlocked level
+    if (unlockedLevel === 2 && level2Btn) {
       setTimeout(() => {
         level2Btn.classList.add("unlock-animation");
-        
-        // Celebratory confetti burst!
-        if (typeof confetti === 'function') {
-          confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#5fb871', '#619bdc', '#FFD700', '#f87171'],
-            zIndex: 1000
-          });
-        }
-      }, 500); // Small delay for better impact after screen shows
+        triggerConfetti();
+      }, 500);
+    } else if (unlockedLevel === 3 && level3Btn) {
+      setTimeout(() => {
+        level3Btn.classList.add("unlock-animation");
+        triggerConfetti();
+      }, 500);
     }
 
     // Clear flag after use
@@ -109,6 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       // Redirect to Pop the Balloon game
       window.location.href = "/games/poptheballoon";
+    });
+  }
+
+  if (level3Btn) {
+    level3Btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = "/games/grammar-proficiency/";
     });
   }
 

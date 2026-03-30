@@ -149,7 +149,7 @@ body.game-body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    z-index: 10;
+    /* z-index: 10; */
 }
 
 .game-area-bg {
@@ -341,95 +341,13 @@ body.game-body {
     pointer-events: none;
 }
 
-.darts-group {
+.darts-img {
     position: absolute;
-    bottom: 40px;
-    /* Above the base */
-    display: flex;
-    gap: 0;
-    justify-content: center;
-}
-
-.dart {
-    width: 20px;
-    height: 100px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform-origin: bottom center;
-    /* Fan out from bottom */
-}
-
-/* Fanning out */
-.dart-left {
-    transform: rotate(-25deg) translateY(10px) translateX(15px);
-}
-
-.dart-center {
-    transform: rotate(0deg) translateY(-10px);
+    bottom: 0px;
+    width: 220px;
+    height: auto;
     z-index: 2;
-}
-
-.dart-right {
-    transform: rotate(25deg) translateY(10px) translateX(-15px);
-}
-
-/* Dart Flight (Red Feathers) */
-.dart-flight {
-    width: 22px;
-    height: 35px;
-    background: #e6261f;
-    clip-path: polygon(50% 0%, 100% 20%, 100% 100%, 50% 80%, 0% 100%, 0% 20%);
-    box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Details for the feather look */
-.dart-flight::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 25px;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-/* Dart stick with different colors */
-.dart-stick {
-    width: 4px;
-    height: 60px;
-    background: linear-gradient(to right, #666, #aaa 50%, #444);
-    position: relative;
-    z-index: -1;
-    margin-top: -5px;
-    /* Tuck under flight */
-    border-radius: 0 0 2px 2px;
-}
-
-.dart-left .dart-stick {
-    background: linear-gradient(to bottom, #d64fd2, #444 40%);
-}
-
-/* A hint of purple on stick */
-.dart-center .dart-stick {
-    background: linear-gradient(to bottom, #3976f0, #444 40%);
-}
-
-/* A hint of blue */
-.dart-right .dart-stick {
-    background: linear-gradient(to bottom, #eb5826, #444 40%);
-}
-
-/* A hint of orange */
-
-.darts-base {
-    width: 240px;
-    height: 80px;
-    background-color: #4b4b4b;
-    border-radius: 120px 120px 0 0;
-    box-shadow: inset 0 20px 20px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
 }
 
 /* --- Nav Buttons --- */
@@ -780,6 +698,30 @@ body.game-body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+.results-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-save-score {
+    background-color: var(--accent-green, #7ac142);
+    color: var(--white);
+    border: 4px solid var(--white);
+    border-radius: 50px;
+    padding: 15px 40px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-save-score:hover {
+    transform: scale(1.05);
+}
+
 .btn-next-round {
     background-color: var(--primary-blue);
     color: var(--white);
@@ -963,7 +905,8 @@ body.game-body {
     padding: 30px 40px;
     display: flex;
     justify-content: space-between;
-    pointer-events: none; /* Allow clicks through to balloons, except on buttons */
+    pointer-events: none;
+    /* Allow clicks through to balloons, except on buttons */
 }
 
 .btn-back {
@@ -993,7 +936,8 @@ body.game-body {
 
 /* --- Settings Wrapper (Sync with Dashboard) --- */
 .settings-wrapper {
-    position: relative; /* Changed from fixed because it's inside game-footer */
+    position: relative;
+    /* Changed from fixed because it's inside game-footer */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -1023,7 +967,8 @@ body.game-body {
     position: absolute;
     bottom: 80px;
     right: 0;
-    background: #2d4373; /* Exact var(--blue-dark) from styles.css */
+    background: #2d4373;
+    /* Exact var(--blue-dark) from styles.css */
     border: 4px solid var(--white);
     border-radius: 20px;
     padding: 24px;
@@ -1129,11 +1074,11 @@ body.game-body {
     z-index: 2;
 }
 
-.settings-toggle input:checked + .toggle-slider-round {
+.settings-toggle input:checked+.toggle-slider-round {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-.settings-toggle input:checked + .toggle-slider-round:before {
+.settings-toggle input:checked+.toggle-slider-round:before {
     transform: translateX(28px);
 }
 
@@ -1153,7 +1098,7 @@ body.game-body {
     right: 10px;
 }
 
-.settings-toggle input:checked ~ .toggle-icon-moon {
+.settings-toggle input:checked~.toggle-icon-moon {
     opacity: 1;
 }
 
@@ -1163,7 +1108,8 @@ body.dark-mode {
     --text-dark: #e0e0e0;
     --light-blue: #1e293b;
     --primary-blue: #080d1a;
-    background-image: none; /* Hide doodle pattern in dark mode */
+    background-image: none;
+    /* Hide doodle pattern in dark mode */
 }
 
 body.dark-mode .game-area-bg {
@@ -1178,7 +1124,8 @@ body.dark-mode .sentence-box {
 
 body.dark-mode .hud-bar {
     background-color: #000;
-    border-color: #1a1b1f; /* Matching dash-dark */
+    border-color: #1a1b1f;
+    /* Matching dash-dark */
 }
 
 body.dark-mode .feedback-overlay {

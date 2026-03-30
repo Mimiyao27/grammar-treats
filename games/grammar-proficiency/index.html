@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pop the Balloon | Grammar Treats</title>
-    <link rel="stylesheet" href="poptheballoon.css">
+    <title>Grammar Proficiency | Grammar Treats</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="proficiency.css">
 </head>
 <body class="game-body">
     <!-- Top HUD -->
@@ -16,47 +17,26 @@
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
             </div>
-            <div class="question-tracker">Question 1 of 10</div>
-            <div class="timer-display">0:30</div>
+            <div class="question-tracker" id="question-tracker">Question 1 of 10</div>
+            <div class="timer-display" id="timer-display">0:30</div>
         </div>
     </div>
 
-    <h2 class="instruction-text">Which is the correct punctuation mark to use?</h2>
+    <div class="game-container">
+        <h2 class="question-text" id="question-text">Which sentence is grammatically correct?</h2>
 
-    <!-- Main Game Container -->
-    <main class="game-main">
-        <div class="game-area-bg">
-            <div class="sentence-box">
-                She went to the market <span class="blank">___</span><br>
-                bought some fruits.
-            </div>
-
-            <div class="balloons-container">
-                <div class="balloon balloon-green" data-value=".">
-                    <span class="punctuation">.</span>
-                </div>
-                <div class="balloon balloon-blue" data-value="?">
-                    <span class="punctuation">?</span>
-                </div>
-                <div class="balloon balloon-yellow" data-value=",">
-                    <span class="punctuation">,</span>
-                </div>
-                <div class="balloon balloon-purple" data-value="!">
-                    <span class="punctuation">!</span>
-                </div>
-                <div class="balloon balloon-pink" data-value=":">
-                    <span class="punctuation">:</span>
-                </div>
-            </div>
+        <div class="options-container" id="options-container">
+            <!-- Options will be injected here -->
+            <button class="option-btn" data-index="0">He go to school everyday.</button>
+            <button class="option-btn" data-index="1">He go to school everyday.</button>
+            <button class="option-btn" data-index="2">He goes to school everyday.</button>
+            <button class="option-btn" data-index="3">He gone to school everyday.</button>
         </div>
-    </main>
 
-    <!-- Bottom Darts & Support Base -->
-    <div class="darts-station">
-        <img src="../../assets/images/arrow.png" alt="Darts" class="darts-img">
+        <button class="submit-btn" id="submit-btn">Submit</button>
     </div>
 
-    <!-- Game Footer with Navigation & Settings -->
+    <!-- Footer -->
     <div class="game-footer">
         <button class="btn-back" id="btn-back" title="Back to Dashboard">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
@@ -64,7 +44,6 @@
             </svg>
         </button>
 
-        <!-- Settings Wrapper duplicated from Dashboard -->
         <div class="settings-wrapper">
             <button class="btn-settings" id="btn-settings" title="Settings" aria-label="Settings">
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
@@ -119,35 +98,32 @@
 
     <!-- Feedback Overlay -->
     <div class="feedback-overlay" id="feedback-overlay">
-
         <h1 class="feedback-title" id="feedback-title">Perfect!</h1>
-        
         <div class="feedback-card">
-            <h2 class="feedback-subtitle" id="feedback-subtitle">You've won a slice of cake!</h2>
-            <div class="feedback-image" id="feedback-image">🍰</div>
+            <h2 class="feedback-subtitle" id="feedback-subtitle">You've won a piece of candy!</h2>
+            <div class="feedback-image" id="feedback-image">🍬</div>
             <div class="feedback-stats-container">
                 <div class="feedback-score-pill" id="feedback-score">Score: 100</div>
                 <div class="feedback-score-pill" id="feedback-treats">Treats: 10</div>
             </div>
-            <div class="feedback-sentence-pill" id="feedback-sentence">She went to the market, bought some fruits.</div>
-            <p class="feedback-explanation" id="feedback-explanation">We use a comma because the sentence shows two actions happening, and the comma helps connect them smoothly.</p>
+            <div class="feedback-sentence-pill" id="feedback-sentence">He goes to school everyday.</div>
+            <p class="feedback-explanation" id="feedback-explanation">"He" is a third-person singular subject, so the verb "go" becomes "goes".</p>
         </div>
-
         <button class="btn-next-question" id="btn-next-question">Next Question</button>
     </div>
 
     <!-- Results Screen -->
     <div class="results-overlay" id="results-overlay">
-        <h1 class="results-title">Great job, <span id="player-name">Player Name</span>!</h1>
-        <p class="results-subtitle">You've completed the second round of Grammar Treats!</p>
+        <h1 class="results-title">Great job, <span id="player-name">Player</span>!</h1>
+        <p class="results-subtitle">You've completed the Grammar Proficiency level!</p>
         
         <div class="results-card">
             <div class="results-stats">
-                <p>Total Score: <span id="final-correct">8/10</span></p>
-                <p>Points Earned: <span id="final-points">800</span></p>
-                <p>Treats Earned: <span id="final-treats">80</span></p>
+                <p>Total Score: <span id="final-correct">0/10</span></p>
+                <p>Points Earned: <span id="final-points">0</span></p>
+                <p>Treats Earned: <span id="final-treats">0</span></p>
                 
-                <p class="results-encouragement">Keep polishing your skills to collect even more tasty treats!</p>
+                <p class="results-encouragement">Keep practicing to improve your grammar skills!</p>
                 <a href="#" class="review-link">Review Incorrect Answers</a>
             </div>
             <div class="results-chart">
@@ -157,23 +133,20 @@
         
         <div class="results-actions">
             <button class="btn-save-score" id="btn-save-score">Save Score</button>
-            <button class="btn-next-round">Next Round</button>
+            <button class="btn-next-round" id="btn-next-round">Next Round</button>
         </div>
     </div>
 
     <!-- Review Screen -->
     <div class="review-overlay" id="review-overlay">
         <h1 class="review-title">Review Result</h1>
-        
-        <div class="review-scroll-container" id="review-container">
-            <!-- Review cards will be dynamically injected here via JS -->
-        </div>
-
+        <div class="review-scroll-container" id="review-container"></div>
         <button class="btn-close-review" id="btn-close-review">Close Review</button>
     </div>
 
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="poptheballoon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="proficiency.js"></script>
 </body>
 </html>
