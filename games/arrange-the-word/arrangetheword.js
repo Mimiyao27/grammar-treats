@@ -3,43 +3,43 @@
 const questions = [
     {
         sentence: "Peter Piper picked a peck of pickled peppers.",
-        explanation: "This is a classic tongue twister. The words must be in the correct order to make sense."
+        explanation: "Subject-verb agreement: 'Peter Piper' is singular, so the past tense verb 'picked' correctly matches the subject. Word order: First we say who (Peter Piper), then what he did (picked), then what he picked (a peck of pickled peppers)."
     },
     {
-        sentence: "The quick brown fox jumps over the lazy dog.",
-        explanation: "This sentence contains every letter of the alphabet!"
+        sentence: "She sells sea shells on the sea shore.",
+        explanation: "Subject-verb agreement: 'She' is singular, so the present tense verb takes -s -> 'sells.' Word order: First we say who (She), then what she does (sells), then what she sells (sea shells), and finally where (on the sea shore)."
     },
     {
-        sentence: "Always wash your hands before you eat.",
-        explanation: "A complete sentence starts with a capital letter and ends with a period."
+        sentence: "My best friend bought a new book yesterday.",
+        explanation: "Subject-verb agreement: 'My best friend' is singular, so the past tense verb 'bought' correctly matches the subject. Word order: First we say who (My best friend), then what they did (bought), then what they bought (a new book), and finally when it happened (yesterday)."
     },
     {
-        sentence: "She sells seashells by the seashore.",
-        explanation: "The words form a rhythmic pattern known as alliteration."
+        sentence: "The children played in the park after school.",
+        explanation: "Subject-verb agreement: 'The children' is plural, so we use 'played' (past tense works for both singular and plural). Word order: First we say who (The children), then what they did (played), then where it happened (in the park), and finally when (after school)."
     },
     {
-        sentence: "Education is the most powerful weapon which you can use to change the world.",
-        explanation: "This famous quote by Nelson Mandela highlights the importance of learning."
+        sentence: "I enjoy reading books before going to bed.",
+        explanation: "Subject-verb agreement: 'I' is singular, so the present tense verb does not take -s -> 'enjoy.' Word order: First we say who (I), then what they do (enjoy), then what they enjoy (reading books), and finally when (before going to bed)."
     },
     {
-        sentence: "The sun rises in the east and sets in the west.",
-        explanation: "A factual sentence describing the sun's daily path."
+        sentence: "Every morning, she jogs around the lake before breakfast.",
+        explanation: "Subject-verb agreement: 'She' is singular, so the present tense verb takes -s -> 'jogs.' Word order: First we say when (Every morning), then who (she), then what she does (jogs), then where (around the lake), and finally another time reference (before breakfast)."
     },
     {
-        sentence: "Practice makes perfect when learning a new language.",
-        explanation: "Consistent effort is key to mastering grammar."
+        sentence: "My grandma bakes cookies every weekend.",
+        explanation: "Subject-verb agreement: 'My grandma' is singular, so the present tense verb takes -s -> 'bakes.' Word order: First we say who (My grandma), then what she does (bakes), then what she bakes (cookies), and finally when (every weekend)."
     },
     {
-        sentence: "Reading books helps you travel to far away places without moving your feet.",
-        explanation: "A beautiful metaphor about the power of reading."
+        sentence: "The early bird catches the worm.",
+        explanation: "Subject-verb agreement: 'The early bird' is singular, so the present tense verb takes -s -> 'catches.' Word order: First we say who (The early bird), then what it does (catches), and finally what it catches (the worm)."
     },
     {
-        sentence: "Kindness is a language which the deaf can hear and the blind can see.",
-        explanation: "A powerful quote about the universal nature of kindness."
+        sentence: "The dog ran to the park yesterday.",
+        explanation: "Subject-verb agreement: 'The dog' is singular, so the past tense verb 'ran' correctly matches the subject. Word order: First we say who (The dog), then what it did (ran), then where it ran (to the park), and finally when (yesterday)."
     },
     {
-        sentence: "The only way to do great work is to love what you do.",
-        explanation: "Steve Jobs' advice on finding passion in your work."
+        sentence: "My little sister is learning how to ride a bike.",
+        explanation: "Subject-verb agreement: 'My little sister' is singular, so the verb phrase 'is learning' correctly matches the subject. Word order: First we say who (My little sister), then what she is doing (is learning), and finally what she is learning (how to ride a bike)."
     }
 ];
 
@@ -126,6 +126,10 @@ function loadQuestion() {
     dropZone.addEventListener("dragover", handleDragOver);
     dropZone.addEventListener("dragleave", handleDragLeave);
     dropZone.addEventListener("drop", handleDrop);
+
+    // Word Pool events
+    wordPool.addEventListener("dragover", handlePoolDragOver);
+    wordPool.addEventListener("drop", handlePoolDrop);
 }
 
 // Drag & Drop Handlers
@@ -154,10 +158,46 @@ function handleDrop(e) {
     const chip = document.getElementById(id);
     
     if (chip) {
-        addWordToDropZone(chip);
+        const targetChip = e.target.closest('.word-chip');
+        addWordToDropZone(chip, targetChip);
     }
 }
 
+function handlePoolDragOver(e) {
+    e.preventDefault();
+}
+
+function handlePoolDrop(e) {
+    e.preventDefault();
+    const id = e.dataTransfer.getData("text/plain");
+    const chip = document.getElementById(id);
+    
+    if (chip && chip.parentElement === dropZone) {
+        removeWordFromDropZone(chip);
+    }
+}
+
+function removeWordFromDropZone(chip) {
+    if (chip.parentElement !== wordPool) {
+        wordPool.appendChild(chip);
+        // Remove only one instance to support duplicate words safely
+        const idx = droppedWords.indexOf(chip.dataset.word);
+        if (idx > -1) {
+            droppedWords.splice(idx, 1);
+        }
+        
+        if (dropZone.children.length === 0) {
+            dropZone.innerHTML = '<div class="drop-placeholder">Drag words here...</div>';
+        }
+        updateSubmitButton();
+        
+        chip.onclick = () => {
+            if (chip.parentElement === wordPool) {
+                addWordToDropZone(chip);
+            }
+        };
+    }
+}
 // Touch Handlers for Mobile
 let activeChip = null;
 function handleTouchStart(e) {
@@ -182,9 +222,29 @@ function handleTouchStart(e) {
         activeChip.classList.remove("dragging");
         
         const dropZoneRect = dropZone.getBoundingClientRect();
+        const wordPoolRect = wordPool.getBoundingClientRect();
+        
         if (touch.clientX >= dropZoneRect.left && touch.clientX <= dropZoneRect.right &&
             touch.clientY >= dropZoneRect.top && touch.clientY <= dropZoneRect.bottom) {
-            addWordToDropZone(activeChip);
+            
+            let targetChip = null;
+            const chipsInZone = Array.from(dropZone.querySelectorAll('.word-chip'));
+            for (let c of chipsInZone) {
+                if (c === activeChip) continue;
+                const rect = c.getBoundingClientRect();
+                if (touch.clientX >= rect.left && touch.clientX <= rect.right &&
+                    touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+                    targetChip = c;
+                    break;
+                }
+            }
+            
+            addWordToDropZone(activeChip, targetChip);
+        } else if (touch.clientX >= wordPoolRect.left && touch.clientX <= wordPoolRect.right &&
+                   touch.clientY >= wordPoolRect.top && touch.clientY <= wordPoolRect.bottom) {
+            if (activeChip.parentElement === dropZone) {
+                removeWordFromDropZone(activeChip);
+            }
         }
         
         document.removeEventListener("touchmove", moveHandler);
@@ -195,33 +255,46 @@ function handleTouchStart(e) {
     document.addEventListener("touchend", endHandler);
 }
 
-function addWordToDropZone(chip) {
+function addWordToDropZone(chip, targetChip = null) {
     // Remove placeholder
     const placeholder = dropZone.querySelector(".drop-placeholder");
     if (placeholder) placeholder.remove();
     
-    // Check if chip is already in drop zone
-    if (!dropZone.contains(chip)) {
-        dropZone.appendChild(chip);
-        droppedWords.push(chip.dataset.word);
+    if (targetChip && targetChip !== chip && dropZone.contains(targetChip)) {
+        if (dropZone.contains(chip)) {
+            // Both in drop zone -> swap
+            const targetNext = targetChip.nextSibling;
+            const chunkNext = chip.nextSibling;
+            
+            if (targetNext === chip) {
+                dropZone.insertBefore(chip, targetChip);
+            } else if (chunkNext === targetChip) {
+                dropZone.insertBefore(targetChip, chip);
+            } else {
+                dropZone.insertBefore(chip, targetChip);
+                if (chunkNext) {
+                    dropZone.insertBefore(targetChip, chunkNext);
+                } else {
+                    dropZone.appendChild(targetChip);
+                }
+            }
+        } else {
+            // From pool to specific target -> insert before target
+            dropZone.insertBefore(chip, targetChip);
+            droppedWords.push(chip.dataset.word);
+        }
+    } else {
+        if (!dropZone.contains(chip)) {
+            dropZone.appendChild(chip);
+            droppedWords.push(chip.dataset.word);
+        } else {
+            // Dragged within dropzone onto empty space, just append to end
+            dropZone.appendChild(chip);
+        }
     }
     
     // Allow clicking to return to pool
-    chip.onclick = () => {
-        wordPool.appendChild(chip);
-        droppedWords = droppedWords.filter(w => w !== chip.dataset.word); // simplified, might need better logic for duplicate words
-        if (dropZone.children.length === 0) {
-            dropZone.innerHTML = '<div class="drop-placeholder">Drag words here...</div>';
-        }
-        updateSubmitButton();
-        
-        // Re-attach the pool-click behavior so it can be clicked to go back up again
-        chip.onclick = () => {
-            if (chip.parentElement === wordPool) {
-                addWordToDropZone(chip);
-            }
-        };
-    };
+    chip.onclick = () => removeWordFromDropZone(chip);
     
     updateSubmitButton();
 }
@@ -413,7 +486,7 @@ if (btnSaveScore) {
             return;
         }
         
-        const accuracy = (score / 100 / questions.length) * 100;
+        const accuracy = Math.round((score / 100 / questions.length) * 100);
         
         try {
             const { data: existing } = await supabaseClient
@@ -423,7 +496,10 @@ if (btnSaveScore) {
                 .maybeSingle();
 
             if (existing) {
-                if (confirm(`Overwrite existing score? (Points: ${existing.points})`)) {
+                const msg = `You already have a saved score for Level 4:\n` +
+                    `Previous: Points: ${existing.points}, Treats: ${existing.treats}, Accuracy: ${existing.accuracy}%\n` +
+                    `New: Points: ${score}, Treats: ${treats}, Accuracy: ${accuracy}%\n\nOverwrite?`;
+                if (confirm(msg)) {
                     await supabaseClient
                         .from('lvl4_scores')
                         .update({ points: score, treats, accuracy })
@@ -434,7 +510,7 @@ if (btnSaveScore) {
                 await supabaseClient
                     .from('lvl4_scores')
                     .insert([{ user_email: email, points: score, treats, accuracy }]);
-                alert("Score saved! 🏆");
+                alert("Level 4 score saved! 🏆");
             }
         } catch (err) {
             console.error(err);
