@@ -335,8 +335,9 @@ function showResults() {
     // Show with active class (matching poptheballoon)
     resultsOverlay.classList.add("active");
     
-    // Unlock Level 4 if score is high enough (50%+)
-    if (percentage >= 50) {
+    // Unlock Level 4 upon completion
+    const currentUnlocked = parseInt(localStorage.getItem("unlockedLevel") || "1");
+    if (currentUnlocked < 4) {
         localStorage.setItem("unlockedLevel", "4");
     }
     
@@ -357,6 +358,11 @@ btnBack.addEventListener("click", () => {
 });
 
 btnNextRound.addEventListener("click", () => {
+    // Ensure Level 4 is unlocked when returning to selection
+    const currentUnlocked = parseInt(localStorage.getItem("unlockedLevel") || "1");
+    if (currentUnlocked < 4) {
+        localStorage.setItem("unlockedLevel", "4");
+    }
     localStorage.setItem('showLevelScreen', 'true');
     window.location.href = "/dashboard/";
 });

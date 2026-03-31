@@ -272,8 +272,8 @@ body.dark-mode .review-item {
     align-items: center;
 }
 
-.btn-back, .btn-settings {
-    background: var(--proficiency-blue);
+.btn-back {
+    background: var(--blue-dark);
     color: white;
     width: 60px;
     height: 60px;
@@ -281,14 +281,16 @@ body.dark-mode .review-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 4px solid white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 4px solid var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn-back:hover, .btn-settings:hover {
-    background: var(--proficiency-blue-dark);
+.btn-back:hover {
+    background: var(--blue);
     transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* --- Feedback Overlay --- */
@@ -711,29 +713,33 @@ body.dark-mode .review-item {
 /* Settings Popover (reused) */
 /* Settings Button & Popover (Aligned with Dashboard) */
 .settings-wrapper {
-    position: relative;
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
     z-index: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .btn-settings {
     background: var(--white);
-    color: var(--proficiency-blue);
+    color: var(--blue-dark);
     width: 60px;
     height: 60px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 4px solid var(--white);
+    border: 3px solid var(--blue);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-settings:hover {
-    background: var(--proficiency-blue-dark);
-    color: var(--white);
     transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .settings-popover {
@@ -869,6 +875,7 @@ body.dark-mode .review-item {
     justify-content: center;
     transition: all 0.4s;
     z-index: 1;
+    opacity: 0;
 }
 
 .toggle-icon-moon {
@@ -878,17 +885,21 @@ body.dark-mode .review-item {
 /* Dark Mode Overrides for Settings (Matching Dashboard) */
 body.dark-mode .btn-settings {
     background-color: #0a0a0a !important;
-    color: var(--proficiency-blue) !important;
-    border-color: var(--proficiency-blue) !important;
+    color: #3B5998 !important;
+    border-color: #3B5998 !important;
 }
 
 body.dark-mode .settings-popover {
     background-color: #0c0c0c !important;
-    border-color: var(--proficiency-blue) !important;
+    border-color: #3B5998 !important;
 }
 
 body.dark-mode .settings-info {
-    color: var(--proficiency-blue) !important;
+    color: #3B5998 !important;
+}
+
+body.dark-mode .toggle-icon svg {
+    fill: #3B5998 !important;
 }
 
 body.dark-mode .settings-slider {
@@ -896,7 +907,7 @@ body.dark-mode .settings-slider {
 }
 
 body.dark-mode .settings-slider::-webkit-slider-thumb {
-    background: var(--proficiency-blue) !important;
+    background: #3B5998 !important;
 }
 
 body.dark-mode .toggle-slider-round {
@@ -904,6 +915,6 @@ body.dark-mode .toggle-slider-round {
 }
 
 body.dark-mode .toggle-slider-round:before {
-    background-color: var(--proficiency-blue) !important;
+    background-color: #3B5998 !important;
 }
 
