@@ -360,7 +360,8 @@ function showFeedback(isCorrect) {
                 particleCount: 150,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#7ac142', '#3B5998', '#FFD700']
+                colors: ['#7ac142', '#2f448c', '#FFD700'],
+                zIndex: 2000
             });
         }
         // Play sound if available (handled in initSettings)
@@ -429,6 +430,11 @@ btnBack.addEventListener("click", () => {
 });
 
 btnNextRound.addEventListener("click", () => {
+    // Ensure Level 5 is unlocked when returning to selection
+    const currentUnlocked = parseInt(localStorage.getItem("unlockedLevel") || "1");
+    if (currentUnlocked < 5) {
+        localStorage.setItem("unlockedLevel", "5");
+    }
     localStorage.setItem('showLevelScreen', 'true');
     window.location.href = "/dashboard/";
 });

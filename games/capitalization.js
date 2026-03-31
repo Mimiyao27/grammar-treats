@@ -87,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnNext = document.getElementById('btn-next');
     const feedbackTitle = document.getElementById('feedback-title');
     const feedbackSubtitle = document.getElementById('feedback-subtitle');
-    const feedbackVisual = document.getElementById('feedback-visual');
+    const feedbackImage = document.getElementById('feedback-image');
     const feedbackScore = document.getElementById('feedback-score');
     const feedbackTreats = document.getElementById('feedback-treats');
-    const feedbackCorrectSentence = document.getElementById('feedback-correct-sentence');
+    const feedbackSentence = document.getElementById('feedback-sentence');
     const feedbackExplanation = document.getElementById('feedback-explanation');
 
     const resultsOverlay = document.getElementById('results-overlay');
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             const randomTitle = correctTitles[Math.floor(Math.random() * correctTitles.length)];
             feedbackTitle.innerText = randomTitle;
-            feedbackTitle.className = "feedback-main-title title-correct";
+            feedbackTitle.classList.remove('title-wrong');
 
             const rewards = [
                 { text: "You got it right! Enjoy this chocolate bar!", visual: "🍫" },
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             const randomReward = rewards[Math.floor(Math.random() * rewards.length)];
             feedbackSubtitle.innerText = randomReward.text;
-            feedbackVisual.innerText = randomReward.visual;
+            feedbackImage.innerText = randomReward.visual;
         } else {
             const incorrectTitles = [
                 "Good effort! Try again",
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             const randomTitle = incorrectTitles[Math.floor(Math.random() * incorrectTitles.length)];
             feedbackTitle.innerText = randomTitle;
-            feedbackTitle.className = "feedback-main-title title-wrong";
+            feedbackTitle.classList.add('title-wrong');
 
             const retryMessages = [
                 { text: "The cupcake melted, so here’s a cupcake plush instead—snacks are waiting next round!", visual: "🧁" },
@@ -394,12 +394,12 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             const randomRetry = retryMessages[Math.floor(Math.random() * retryMessages.length)];
             feedbackSubtitle.innerText = randomRetry.text;
-            feedbackVisual.innerText = randomRetry.visual;
+            feedbackImage.innerText = randomRetry.visual;
         }
 
         feedbackScore.innerText = (earnedScore > 0 ? "+" : "") + earnedScore;
         feedbackTreats.innerText = earnedTreats;
-        feedbackCorrectSentence.innerText = fullCorrectSentence;
+        feedbackSentence.innerText = fullCorrectSentence;
         feedbackExplanation.innerText = q.explanation;
 
         btnNext.innerText = (currentQuestionIndex < questions.length - 1) ? "Next Question" : "Complete Level";
@@ -417,11 +417,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function showResults() {
+        // Fetch player name securely
+        let playerName = 'Player';
+        try {
+            playerName = localStorage.getItem('username') || localStorage.getItem('fullName') || 'Player';
+        } catch (e) { }
+
+        const nameSpan = document.getElementById('player-name');
+        if (nameSpan) nameSpan.textContent = playerName;
+
         resultsOverlay.classList.remove('hidden');
 
         finalTotalScore.innerText = `${questionsCorrectCount}/${questions.length}`;
         finalPoints.innerText = totalScore;
-        finalTreats.innerText = `${totalTreats} 🍬`;
+        finalTreats.innerText = totalTreats;
 
         // Dynamic Motivational Message
         const motivationMessages = {
@@ -440,8 +449,30 @@ document.addEventListener('DOMContentLoaded', () => {
         finalMotivation.innerText = motivationMessages[questionsCorrectCount] || "Keep practicing — every great reader started just like you! 💪";
 
         // Calculate Pie Chart (Correct vs Incorrect)
-        const correctPercent = (questionsCorrectCount / questions.length) * 100;
-        pieChart.style.background = `conic-gradient(#5fb871 0% ${correctPercent}%, #f87171 ${correctPercent}% 100%)`;
+        const correctPercent = Math.round((questionsCorrectCount / questions.length) * 100);
+        if (pieChart) {
+            pieChart.style.background = `conic-gradient(#4CAF50 0% ${correctPercent}%, #eb1e1e ${correctPercent}% 100%)`;
+        }
+
+        // Setup review section
+        reviewList.innerHTML = '';
+        questionResults.forEach((res, idx) => {
+            const item = document.createElement('div');
+            item.className = 'review-item';
+            if (!res.isCorrect) item.style.borderLeftColor = '#fca5a5';
+
+            item.innerHTML = `
+                <div class="review-label">QUESTION ${idx + 1}</div>
+                <div class="review-player-answer ${res.isCorrect ? 'correct' : 'wrong'}">
+                    <strong>Your Answer:</strong> ${res.playerSentence}
+                </div>
+                <div class="review-correct">
+                    <strong>Correct Answer:</strong> ${res.correctSentence}
+                </div>
+                <p class="review-explanation">${res.explanation}</p>
+            `;
+            reviewList.appendChild(item);
+        });
 
         // Final celebration for high scores
         if (questionsCorrectCount >= 7 && typeof confetti === 'function') {
@@ -565,25 +596,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     btnReview.onclick = () => {
-        reviewList.innerHTML = '';
-        questionResults.forEach((res, idx) => {
-            const item = document.createElement('div');
-            item.className = 'review-item';
-            if (!res.isCorrect) item.style.borderLeftColor = '#f87171'; // Red for incorrect
-
-            item.innerHTML = `
-            <div class="review-label">Question ${idx + 1}</div>
-            <div class="review-player-answer ${res.isCorrect ? 'correct' : 'wrong'}">
-                <strong>Your Answer:</strong> ${res.playerSentence}
-            </div>
-            <div class="review-correct">
-                <strong>Correct Answer:</strong> ${res.correctSentence}
-            </div>
-            <p class="review-explanation">${res.explanation}</p>
-        `;
-            reviewList.appendChild(item);
-        });
-
         reviewOverlay.classList.remove('hidden');
     };
 

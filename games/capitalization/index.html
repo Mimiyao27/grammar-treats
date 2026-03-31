@@ -54,17 +54,18 @@
 
         <!-- Feedback UI -->
         <div id="feedback-overlay" class="feedback-overlay hidden">
-            <h2 id="feedback-title" class="feedback-main-title">Awesome job!</h2>
+            <h1 id="feedback-title" class="feedback-title">Awesome job!</h1>
+            
             <div class="feedback-card">
-                <p id="feedback-subtitle" class="feedback-subtitle">You deserve these chocolates!</p>
-                <div id="feedback-visual" class="feedback-visual">🍫</div>
+                <h2 id="feedback-subtitle" class="feedback-subtitle">You deserves these chocolates!</h2>
+                <div id="feedback-image" class="feedback-image">🍫</div>
                 
-                <div class="score-pill-wrapper">
-                    <span class="score-pill">Score: <span id="feedback-score">100</span></span>
-                    <span class="score-pill">Treats: <span id="feedback-treats">0</span> 🍬</span>
+                <div class="feedback-stats-container">
+                    <div class="feedback-score-pill">Score: <span id="feedback-score">100</span></div>
+                    <div class="feedback-score-pill">Treats: <span id="feedback-treats">0</span></div>
                 </div>
 
-                <div id="feedback-correct-sentence" class="sentence-result-pill">
+                <div id="feedback-sentence" class="feedback-sentence-pill">
                     <!-- Correct sentence will go here -->
                 </div>
 
@@ -72,52 +73,44 @@
                     <!-- Explanation will go here -->
                 </p>
             </div>
-            <button id="btn-next" class="btn-next">Next Question</button>
+            <button id="btn-next" class="btn-next-question">Next Question</button>
         </div>
     </div>
 
         <!-- Results Screen UI -->
-        <div id="results-overlay" class="results-overlay hidden">
-            <h2 class="results-main-title">Great job, Player!</h2>
+        <div class="results-overlay hidden" id="results-overlay">
+            <h1 class="results-title">Great job, <span id="player-name">Player Name</span>!</h1>
             <p class="results-subtitle">You've completed the first round of Grammar Treats!</p>
             
             <div class="results-card">
                 <div class="results-stats">
-                    <p class="stat-row">Total Score: <span id="final-total-score">1/10</span></p>
-                    <p class="stat-row">Points Earned: <span id="final-points">100</span></p>
-                    <p class="stat-row">Treats Earned: <span id="final-treats">3 🍬</span></p>
+                    <p>Total Score: <span id="final-total-score">8/10</span></p>
+                    <p>Points Earned: <span id="final-points">800</span></p>
+                    <p>Treats Earned: <span id="final-treats">80</span></p>
                     
-                    <p id="final-motivation" class="motivational-text">Keep practicing — every great reader started just like you! 💪</p>
+                    <p class="results-encouragement" id="final-motivation">Keep polishing your skills to collect even more tasty treats!</p>
                     <a href="javascript:void(0)" id="btn-review" class="review-link">Review Incorrect Answers</a>
                 </div>
-                
                 <div class="results-chart">
-                    <div id="pie-chart" class="pie-chart"></div>
+                    <div class="pie-chart" id="pie-chart"></div>
                 </div>
             </div>
             
             <div class="results-actions">
-                <button id="btn-save-score" class="btn-save-score">Save Score</button>
-                <button id="btn-next-level" class="btn-next-level">Next Level</button>
-            </div>
-
-            <!-- Bottom Nav duplicate for results -->
-            <div class="results-footer">
-                <button class="btn-back" onclick="window.location.href='/dashboard/'">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                    </svg>
-                </button>
+                <button class="btn-save-score" id="btn-save-score">Save Score</button>
+                <button class="btn-next-round" id="btn-next-level">Next Round</button>
             </div>
         </div>
 
         <!-- Review Overlay UI -->
-        <div id="review-overlay" class="review-overlay hidden">
-            <h2 class="results-main-title">Review Result</h2>
-            <div class="review-list" id="review-list">
-                <!-- Review items will be injected here -->
+        <div class="review-overlay hidden" id="review-overlay">
+            <h1 class="review-title">Review Result</h1>
+            
+            <div class="review-scroll-container" id="review-list">
+                <!-- Review cards will be dynamically injected here via JS -->
             </div>
-            <button id="btn-close-review" class="btn-next">Close Review</button>
+
+            <button class="btn-close-review" id="btn-close-review">Close Review</button>
         </div>
     </div>
 

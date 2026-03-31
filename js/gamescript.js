@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const level2Btn = document.getElementById("level-2");
   const level3Btn = document.getElementById("level-3"); // added in case you want more later
   const level4Btn = document.getElementById("level-4"); 
+  const level5Btn = document.getElementById("level-5");
   const levelSelectionScreen = document.getElementById("level-screen");
   
   // Game Elements V2
@@ -97,6 +98,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  if (unlockedLevel >= 5 && level5Btn) {
+    level5Btn.classList.remove("locked");
+    level5Btn.disabled = false;
+    const lockIcon = level5Btn.querySelector(".lock-icon");
+    if (lockIcon) {
+      lockIcon.outerHTML = `
+        <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      `;
+    }
+  }
+
   // Auto-show level selection if flag is set
   if (showLevelScreenFlag === "true" && levelScreen) {
     levelScreen.style.display = "flex";
@@ -116,6 +130,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (unlockedLevel === 4 && level4Btn) {
       setTimeout(() => {
         level4Btn.classList.add("unlock-animation");
+        triggerConfetti();
+      }, 500);
+    } else if (unlockedLevel === 5 && level5Btn) {
+      setTimeout(() => {
+        level5Btn.classList.add("unlock-animation");
         triggerConfetti();
       }, 500);
     }
@@ -162,6 +181,13 @@ document.addEventListener("DOMContentLoaded", () => {
     level4Btn.addEventListener("click", (e) => {
       e.preventDefault();
       window.location.href = "/games/arrange-the-word/";
+    });
+  }
+
+  if (level5Btn) {
+    level5Btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = "/games/sentence-correction/";
     });
   }
 
