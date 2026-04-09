@@ -1499,3 +1499,240 @@ body.dark-mode .profile-success-msg {
         font-size: 1.6rem;
     }
 }
+
+/* =====================================================
+   MOBILE RESPONSIVE DESIGN — Level Selection Screen
+   Breakpoints: 480px (phone) | 768px (tablet)
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    /* --- Dashboard Hero --- */
+    .dashboard-hero {
+        padding: 16px 12px;
+        justify-content: center;
+    }
+
+    .user-badge {
+        top: 82px;
+        left: 14px;
+        font-size: 0.85rem;
+        padding: 6px 14px;
+        gap: 8px;
+        border-width: 3px;
+    }
+
+    .dash-logo-img {
+        max-width: 320px;
+    }
+
+    .dash-logo {
+        margin-bottom: 32px;
+    }
+
+    .btn-start {
+        font-size: 1.3rem;
+        padding: 16px 44px;
+    }
+
+    .btn-dash {
+        font-size: 1.1rem;
+        padding: 14px 28px;
+    }
+
+    /* --- Level Screen Container --- */
+    .level-screen {
+        padding: 20px 16px;
+    }
+
+    /* --- Level Cards Container —
+         Switch from single row to responsive wrap grid --- */
+    .level-cards-container {
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    /* --- Individual Level Card --- */
+    .level-card {
+        width: 120px;
+        height: 210px;
+        border-radius: 16px;
+        padding: 20px 8px;
+    }
+
+    /* --- Level Footer --- */
+    .level-footer {
+        padding: 8px 16px;
+    }
+
+    .btn-level-back {
+        width: 44px;
+        height: 44px;
+    }
+
+    .btn-level-back svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn-level-settings {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* --- Settings --- */
+    .settings-wrapper {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .btn-settings {
+        width: 50px;
+        height: 50px;
+    }
+
+    .settings-popover {
+        width: 210px;
+        padding: 16px;
+        gap: 14px;
+    }
+
+    /* --- Dashboard Modals --- */
+    .modal {
+        width: 96% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-howtoplay-inner {
+        padding: 24px 18px;
+    }
+
+    .modal-howtoplay-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 16px !important;
+    }
+
+    .modal-howtoplay-content {
+        max-height: 65vh !important;
+        padding-right: 8px !important;
+    }
+
+    /* --- Leaderboard Modal --- */
+    #modal-leaderboard {
+        padding: 14px !important;
+    }
+
+    #modal-leaderboard > h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    #modal-leaderboard > div:first-of-type {
+        padding: 18px 12px !important;
+    }
+
+    #leaderboard-list {
+        max-height: 260px !important;
+    }
+
+    #btn-close-leaderboard {
+        padding: 10px 40px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* --- Profile Modal --- */
+    .modal-profile {
+        max-width: 96% !important;
+    }
+
+    .modal-profile-inner {
+        padding: 30px 22px 26px;
+    }
+
+    .modal-profile-title {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- Dashboard Hero --- */
+    .user-badge {
+        top: 76px;
+        left: 10px;
+        font-size: 0.76rem;
+        padding: 5px 12px;
+    }
+
+    .dash-logo-img {
+        max-width: 250px;
+    }
+
+    .dash-logo {
+        margin-bottom: 24px;
+    }
+
+    .btn-start {
+        font-size: 1.1rem;
+        padding: 14px 36px;
+    }
+
+    .btn-dash {
+        font-size: 0.95rem;
+        padding: 12px 22px;
+    }
+
+    /* --- Level Cards —
+         5 levels: 2 on top row, 3 on bottom row (natural flex-wrap) --- */
+    .level-cards-container {
+        gap: 10px;
+        padding: 0 6px;
+    }
+
+    .level-card {
+        width: 100px;
+        height: 175px;
+        border-radius: 14px;
+        padding: 16px 6px;
+    }
+
+    /* --- Level Footer --- */
+    .level-footer {
+        padding: 6px 12px;
+    }
+
+    .btn-level-back {
+        width: 38px;
+        height: 38px;
+    }
+
+    .btn-level-back svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* --- Settings --- */
+    .btn-settings {
+        width: 44px;
+        height: 44px;
+    }
+
+    .settings-popover {
+        width: 190px;
+        padding: 14px;
+    }
+
+    /* --- Leaderboard --- */
+    #leaderboard-list {
+        max-height: 200px !important;
+    }
+
+    #btn-close-leaderboard {
+        padding: 8px 32px !important;
+        font-size: 1rem !important;
+    }
+}

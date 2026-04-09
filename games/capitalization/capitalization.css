@@ -1227,3 +1227,374 @@ body.dark-mode .submit-btn {
         transform: scale(1);
     }
 }
+
+/* =====================================================
+   MOBILE RESPONSIVE DESIGN — Capitalization Game
+   Breakpoints: 480px (phone) | 768px (tablet)
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    /* --- Game Body & Container --- */
+    .game-body {
+        align-items: flex-start;
+    }
+
+    .game-container {
+        padding: 80px 16px 120px;
+        max-width: 100%;
+    }
+
+    /* --- HUD Bar --- */
+    .top-hud {
+        padding-top: 10px;
+    }
+
+    .hud-bar {
+        padding: 6px 16px;
+        gap: 10px;
+    }
+
+    .hud-bar .question-tracker {
+        font-size: 0.95rem;
+    }
+
+    .hud-bar .timer-display {
+        font-size: 0.95rem;
+        padding: 3px 10px;
+        min-width: 54px;
+    }
+
+    /* --- Instruction Text --- */
+    .instruction {
+        font-size: 0.92rem;
+        margin-top: 70px;
+        margin-bottom: 14px;
+        padding: 0 8px;
+    }
+
+    /* --- Sentence Box & Word Grid --- */
+    .sentence-box {
+        padding: 22px 16px;
+        border-radius: 24px;
+        margin-bottom: 24px;
+    }
+
+    .word-grid {
+        gap: 28px 14px;
+    }
+
+    /* --- Candy Word Button --- */
+    .word-btn {
+        padding: 10px 18px;
+        font-size: 1rem;
+    }
+
+    .candy-icon {
+        width: 52px;
+        height: 52px;
+        top: -28px;
+    }
+
+    /* --- Submit Button --- */
+    .btn-submit {
+        padding: 14px 52px;
+        font-size: 1.2rem;
+    }
+
+    /* --- Footer --- */
+    .game-footer {
+        padding: 20px 24px;
+    }
+
+    .btn-back {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* --- Settings --- */
+    .settings-wrapper {
+        bottom: 20px;
+        right: 24px;
+    }
+
+    .btn-settings {
+        width: 50px;
+        height: 50px;
+    }
+
+    .settings-popover {
+        width: 210px;
+        padding: 16px;
+    }
+
+    /* --- Type Modal --- */
+    .modal-type {
+        padding: 24px 18px;
+        width: 94%;
+        border-radius: 20px;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+    }
+
+    .candy-display {
+        font-size: 2.4rem;
+    }
+
+    .word-original {
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+    }
+
+    #type-input {
+        font-size: 1rem;
+        padding: 12px;
+        margin-bottom: 20px;
+    }
+
+    .modal-actions button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    /* --- Feedback Overlay --- */
+    .feedback-overlay {
+        padding: 16px 12px 28px;
+    }
+
+    .feedback-title {
+        font-size: 1.8rem;
+    }
+
+    .feedback-card {
+        padding: 14px 14px;
+        border-width: 4px;
+        border-radius: 20px;
+    }
+
+    .feedback-image {
+        font-size: 3.5rem;
+    }
+
+    .feedback-score-pill {
+        padding: 6px 16px;
+        font-size: 0.9rem;
+        border-width: 3px;
+    }
+
+    .feedback-sentence-pill {
+        font-size: 0.9rem;
+        padding: 10px 14px;
+        border-width: 3px;
+    }
+
+    .feedback-explanation {
+        font-size: 0.88rem;
+    }
+
+    .btn-next-question {
+        padding: 12px 32px;
+        font-size: 1rem;
+        border-width: 3px;
+    }
+
+    /* --- Results Screen --- */
+    .results-overlay {
+        padding: 20px 14px;
+        justify-content: flex-start;
+        padding-top: 25px;
+    }
+
+    .results-title {
+        font-size: 2rem !important;
+    }
+
+    .results-subtitle {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .results-card {
+        flex-direction: column !important;
+        gap: 20px !important;
+        padding: 20px 16px !important;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .results-stats p {
+        font-size: 1.05rem;
+    }
+
+    .pie-chart {
+        width: 110px !important;
+        height: 110px !important;
+    }
+
+    .results-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn-save-score,
+    .btn-next-round,
+    .btn-leaderboard-results {
+        padding: 12px 28px !important;
+        font-size: 1.1rem !important;
+        width: 85% !important;
+        margin-top: 0 !important;
+        display: block;
+        text-align: center;
+    }
+
+    /* --- Review Screen --- */
+    .review-title {
+        font-size: 2rem;
+        margin-bottom: 16px;
+    }
+
+    .review-item {
+        padding: 16px;
+    }
+
+    .btn-close-review {
+        padding: 12px 36px;
+        font-size: 1.2rem;
+    }
+
+    /* --- Instructions Modal --- */
+    #modal-instructions {
+        padding: 24px 18px !important;
+        width: 95% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    #modal-instructions h2 {
+        font-size: 1.6rem !important;
+        margin-bottom: 14px !important;
+    }
+
+    #btn-start-game-instructions {
+        padding: 12px 30px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* --- Leaderboard Modal --- */
+    #modal-leaderboard-game {
+        width: 96% !important;
+        padding: 14px !important;
+        border-radius: 24px !important;
+    }
+
+    #modal-leaderboard-game h2 {
+        font-size: 1.5rem !important;
+    }
+
+    #leaderboard-list-game {
+        max-height: 200px !important;
+    }
+
+    #btn-close-leaderboard-game {
+        padding: 10px 40px !important;
+        font-size: 1.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- Game Container --- */
+    .game-container {
+        padding: 70px 10px 110px;
+    }
+
+    /* --- HUD --- */
+    .hud-bar {
+        padding: 5px 12px;
+        gap: 8px;
+    }
+
+    .hud-bar .question-tracker {
+        font-size: 0.8rem;
+    }
+
+    .hud-bar .timer-display {
+        font-size: 0.8rem;
+        padding: 2px 8px;
+        min-width: 48px;
+    }
+
+    /* --- Instruction --- */
+    .instruction {
+        font-size: 0.82rem;
+        margin-top: 64px;
+    }
+
+    /* --- Sentence Box & Word Grid --- */
+    .sentence-box {
+        padding: 18px 12px;
+        border-radius: 20px;
+    }
+
+    .word-grid {
+        gap: 26px 10px;
+    }
+
+    /* --- Candy Button --- */
+    .word-btn {
+        padding: 8px 14px;
+        font-size: 0.88rem;
+    }
+
+    .candy-icon {
+        width: 44px;
+        height: 44px;
+        top: -24px;
+    }
+
+    /* --- Submit Button --- */
+    .btn-submit {
+        padding: 12px 40px;
+        font-size: 1.05rem;
+    }
+
+    /* --- Footer --- */
+    .btn-back,
+    .btn-settings {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* --- Feedback --- */
+    .feedback-title {
+        font-size: 1.5rem;
+    }
+
+    .feedback-image {
+        font-size: 3rem;
+    }
+
+    .feedback-score-pill,
+    .feedback-sentence-pill {
+        font-size: 0.82rem;
+    }
+
+    /* --- Results --- */
+    .results-title {
+        font-size: 1.6rem !important;
+    }
+
+    .results-stats p {
+        font-size: 0.95rem;
+    }
+
+    .btn-save-score,
+    .btn-next-round,
+    .btn-leaderboard-results {
+        font-size: 0.95rem !important;
+        padding: 10px 20px !important;
+    }
+}

@@ -1305,3 +1305,130 @@ img {
         font-size: 1.6rem;
     }
 }
+
+/* =====================================================
+   MOBILE RESPONSIVE DESIGN — Global Styles
+   Breakpoints: 480px (phone) | 768px (tablet)
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    /* --- Goals & About Modal Inner Padding --- */
+    .modal-goals-inner {
+        padding: 30px 20px;
+        border-width: 6px;
+        border-radius: 20px;
+    }
+
+    .modal-goals-title {
+        font-size: 1.7rem;
+        margin-bottom: 24px;
+    }
+
+    .modal-goals-content p {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        text-indent: 24px;
+    }
+
+    .modal-about-inner {
+        padding: 30px 20px;
+        border-width: 6px;
+        border-radius: 20px;
+    }
+
+    .modal-about-title {
+        font-size: 1.7rem;
+        margin-bottom: 24px;
+    }
+
+    .modal-about-content p {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        text-indent: 24px;
+    }
+
+    /* --- Close Button --- */
+    .modal-close-red {
+        width: 44px;
+        height: 44px;
+        font-size: 1.8rem;
+        border-width: 4px;
+        top: 8px;
+        right: 8px;
+    }
+
+    /* --- Hero Landing --- */
+    .hero {
+        padding: 90px 16px 60px;
+    }
+
+    .hero-content {
+        gap: 28px;
+    }
+
+    .title-grammar {
+        font-size: 2.6rem;
+    }
+
+    .title-treats {
+        font-size: 2rem;
+    }
+
+    .hero-cta {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- Goals & About Modal Inner --- */
+    .modal-goals-inner {
+        padding: 22px 14px;
+    }
+
+    .modal-goals-title {
+        font-size: 1.45rem;
+        margin-bottom: 18px;
+    }
+
+    .modal-goals-content p {
+        font-size: 0.92rem;
+        text-indent: 18px;
+    }
+
+    .modal-about-inner {
+        padding: 22px 14px;
+    }
+
+    .modal-about-title {
+        font-size: 1.45rem;
+        margin-bottom: 18px;
+    }
+
+    .modal-about-content p {
+        font-size: 0.92rem;
+        text-indent: 18px;
+    }
+
+    /* --- Close Button --- */
+    .modal-close-red {
+        width: 38px;
+        height: 38px;
+        font-size: 1.5rem;
+    }
+
+    /* --- Hero Landing --- */
+    .title-grammar {
+        font-size: 2rem;
+    }
+
+    .title-treats {
+        font-size: 1.6rem;
+        letter-spacing: 3px;
+    }
+
+    .hero {
+        padding: 80px 12px 50px;
+    }
+}

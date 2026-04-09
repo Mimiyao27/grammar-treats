@@ -1333,8 +1333,332 @@ body.dark-mode .feedback-sentence-pill {
     display: none;
 }
 
+/* =====================================================
+   MOBILE RESPONSIVE DESIGN — Punctuation (Pop the Balloon) Game
+   Breakpoints: 480px (phone) | 768px (tablet)
+   ===================================================== */
+
 @media (max-width: 768px) {
+
+    /* --- HUD Bar --- */
+    .hud-bar {
+        padding: 6px 16px 14px;
+        gap: 10px;
+        border-radius: 40px;
+        margin-top: -12px;
+    }
+
+    .question-tracker {
+        font-size: 0.95rem;
+    }
+
+    .timer-display {
+        font-size: 0.95rem;
+        padding: 3px 10px;
+    }
+
+    /* --- Instruction Text --- */
+    .instruction-text {
+        font-size: 1rem;
+        margin: 16px 0 14px;
+        padding: 0 12px;
+    }
+
+    /* --- Game Main & Game Area --- */
+    .game-main {
+        padding: 0 14px;
+    }
+
+    .game-area-bg {
+        padding: 24px 14px;
+        min-height: 360px;
+        border-radius: 16px;
+    }
+
+    /* --- Sentence Box --- */
+    .sentence-box {
+        width: 100%;
+        padding: 18px 16px;
+        font-size: 1.1rem;
+        border-width: 3px;
+        margin-bottom: 32px;
+    }
+
+    /* --- Balloons --- */
+    .balloons-container {
+        gap: 10px;
+        height: 120px;
+    }
+
+    .balloon {
+        width: 72px;
+        height: 88px;
+        font-size: 2.2rem;
+    }
+
+    /* --- Darts Station --- */
+    .darts-img {
+        width: 160px;
+    }
+
+    /* --- Footer Buttons --- */
     .game-footer {
-        padding: 20px;
+        padding: 20px 24px;
+    }
+
+    .btn-back {
+        width: 50px;
+        height: 50px;
+    }
+
+    .btn-settings {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* --- Settings Popover --- */
+    .settings-popover {
+        width: 210px;
+        padding: 16px;
+    }
+
+    /* --- Feedback Overlay --- */
+    .feedback-overlay {
+        padding: 16px 12px 28px;
+    }
+
+    .feedback-title {
+        font-size: 2rem;
+    }
+
+    .feedback-card {
+        padding: 14px 14px;
+        border-width: 4px;
+        border-radius: 20px;
+    }
+
+    .feedback-image {
+        font-size: 3.5rem;
+    }
+
+    .feedback-score-pill {
+        padding: 6px 18px;
+        font-size: 0.95rem;
+        border-width: 3px;
+    }
+
+    .feedback-sentence-pill {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        border-width: 3px;
+        border-radius: 30px;
+    }
+
+    .feedback-explanation {
+        font-size: 0.9rem;
+    }
+
+    .btn-next-question {
+        padding: 12px 36px;
+        font-size: 1.05rem;
+        border-width: 3px;
+    }
+
+    /* --- Results Screen --- */
+    .results-overlay {
+        padding: 20px 14px;
+        justify-content: flex-start;
+        padding-top: 25px;
+        overflow-y: auto;
+    }
+
+    .results-title {
+        font-size: 2.2rem !important;
+    }
+
+    .results-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 18px;
+    }
+
+    .results-card {
+        flex-direction: column !important;
+        gap: 20px !important;
+        padding: 24px 18px !important;
+        margin-bottom: 22px;
+        width: 100%;
+    }
+
+    .results-stats {
+        font-size: 1.1rem;
+        gap: 10px;
+    }
+
+    .pie-chart {
+        width: 120px !important;
+        height: 120px !important;
+    }
+
+    .results-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn-save-score,
+    .btn-next-round,
+    .btn-leaderboard-results {
+        padding: 12px 28px !important;
+        font-size: 1.1rem !important;
+        width: 85% !important;
+        margin-top: 0 !important;
+        display: block;
+        text-align: center;
+    }
+
+    /* --- Review Screen --- */
+    .review-title {
+        font-size: 2rem;
+        margin-bottom: 16px;
+    }
+
+    .review-item {
+        padding: 16px;
+    }
+
+    .btn-close-review {
+        padding: 12px 36px;
+        font-size: 1.2rem;
+    }
+
+    /* --- Instructions Modal --- */
+    #modal-instructions {
+        padding: 24px 18px !important;
+        width: 95% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    #modal-instructions h2 {
+        font-size: 1.6rem !important;
+        margin-bottom: 14px !important;
+    }
+
+    #btn-start-game-instructions {
+        padding: 12px 30px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* --- Leaderboard Modal --- */
+    #modal-leaderboard-game {
+        width: 96% !important;
+        padding: 14px !important;
+        border-radius: 24px !important;
+    }
+
+    #modal-leaderboard-game h2 {
+        font-size: 1.5rem !important;
+    }
+
+    #leaderboard-list-game {
+        max-height: 200px !important;
+    }
+
+    #btn-close-leaderboard-game {
+        padding: 10px 40px !important;
+        font-size: 1.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- HUD --- */
+    .hud-bar {
+        padding: 5px 12px 12px;
+        gap: 8px;
+    }
+
+    .question-tracker {
+        font-size: 0.8rem;
+    }
+
+    .timer-display {
+        font-size: 0.8rem;
+        padding: 2px 8px;
+    }
+
+    /* --- Game Area --- */
+    .game-main {
+        padding: 0 8px;
+    }
+
+    .game-area-bg {
+        padding: 16px 10px;
+        min-height: 300px;
+    }
+
+    /* --- Sentence Box --- */
+    .sentence-box {
+        font-size: 0.95rem;
+        padding: 14px 12px;
+        margin-bottom: 24px;
+    }
+
+    /* --- Balloons --- */
+    .balloons-container {
+        gap: 6px;
+        height: 100px;
+    }
+
+    .balloon {
+        width: 56px;
+        height: 70px;
+        font-size: 1.7rem;
+    }
+
+    /* --- Darts Station --- */
+    .darts-img {
+        width: 120px;
+    }
+
+    /* --- Footer --- */
+    .game-footer {
+        padding: 14px 16px;
+    }
+
+    .btn-back,
+    .btn-settings {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* --- Feedback --- */
+    .feedback-title {
+        font-size: 1.7rem;
+    }
+
+    .feedback-image {
+        font-size: 3rem;
+    }
+
+    .feedback-score-pill,
+    .feedback-sentence-pill {
+        font-size: 0.85rem;
+    }
+
+    /* --- Results --- */
+    .results-title {
+        font-size: 1.7rem !important;
+    }
+
+    .results-stats {
+        font-size: 0.95rem;
+    }
+
+    .btn-save-score,
+    .btn-next-round,
+    .btn-leaderboard-results {
+        font-size: 0.95rem !important;
+        padding: 10px 20px !important;
     }
 }

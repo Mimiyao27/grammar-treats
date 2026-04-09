@@ -1175,3 +1175,319 @@ body.dark-mode .feedback-sentence-pill {
     border-color: #2c2e33 !important;
     color:  #000000 !important;
 }
+
+/* =====================================================
+   MOBILE RESPONSIVE DESIGN — Grammar Proficiency Game
+   Breakpoints: 480px (phone) | 768px (tablet)
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    /* --- HUD Bar --- */
+    .hud-bar {
+        padding: 6px 16px;
+        gap: 10px;
+        border-radius: 10px;
+    }
+
+    .question-tracker {
+        font-size: 0.95rem;
+    }
+
+    .timer-display {
+        font-size: 0.95rem;
+        padding: 3px 10px;
+    }
+
+    /* --- Game Container --- */
+    .game-container {
+        width: 100%;
+        padding: 0 14px;
+        margin-top: 12px;
+        height: auto;
+        min-height: calc(100vh - 100px);
+    }
+
+    /* --- Question Text --- */
+    .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 14px;
+    }
+
+    /* --- Options Container --- */
+    .options-container {
+        padding: 16px;
+        gap: 10px;
+    }
+
+    .option-btn {
+        padding: 13px;
+        font-size: 1rem;
+        border-width: 3px;
+    }
+
+    /* --- Submit Button --- */
+    .submit-btn {
+        padding: 12px 48px;
+        font-size: 1.15rem;
+        margin-top: 14px;
+        border-width: 4px;
+    }
+
+    /* --- Footer --- */
+    .game-footer {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+    }
+
+    .btn-back {
+        width: 50px;
+        height: 50px;
+    }
+
+    .btn-settings {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* --- Settings Wrapper --- */
+    .settings-wrapper {
+        bottom: 20px;
+        right: 24px;
+    }
+
+    .settings-popover {
+        width: 210px;
+        padding: 16px;
+    }
+
+    /* --- Feedback Overlay --- */
+    .feedback-overlay {
+        padding: 16px 12px 28px;
+    }
+
+    .feedback-title {
+        font-size: 2rem;
+    }
+
+    .feedback-card {
+        padding: 14px 14px;
+        border-width: 4px;
+        border-radius: 20px;
+    }
+
+    .feedback-image {
+        font-size: 3.5rem;
+    }
+
+    .feedback-score-pill {
+        padding: 6px 18px;
+        font-size: 0.95rem;
+        border-width: 3px;
+    }
+
+    .feedback-sentence-pill {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        border-width: 3px;
+        border-radius: 30px;
+    }
+
+    .feedback-explanation {
+        font-size: 0.9rem;
+    }
+
+    .btn-next-question {
+        padding: 12px 36px;
+        font-size: 1.05rem;
+        border-width: 3px;
+    }
+
+    /* --- Results Screen --- */
+    .results-overlay {
+        padding: 20px 14px;
+        justify-content: flex-start;
+        padding-top: 25px;
+        overflow-y: auto;
+    }
+
+    .results-title {
+        font-size: 2rem !important;
+    }
+
+    .results-subtitle {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .results-card {
+        flex-direction: column !important;
+        gap: 20px !important;
+        padding: 20px 16px !important;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .results-stats p {
+        font-size: 1.05rem;
+    }
+
+    .pie-chart {
+        width: 110px !important;
+        height: 110px !important;
+    }
+
+    .results-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn-save-score,
+    .btn-next-round,
+    .btn-leaderboard-results {
+        padding: 12px 28px !important;
+        font-size: 1.1rem !important;
+        width: 85% !important;
+        margin-top: 0 !important;
+        display: block;
+        text-align: center;
+    }
+
+    /* --- Review Screen --- */
+    .review-title {
+        font-size: 2rem;
+        margin-bottom: 16px;
+    }
+
+    .review-item {
+        padding: 16px;
+    }
+
+    .btn-close-review {
+        padding: 12px 36px;
+        font-size: 1.2rem;
+    }
+
+    /* --- Instructions Modal --- */
+    #modal-instructions {
+        padding: 24px 18px !important;
+        width: 95% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    #modal-instructions h2 {
+        font-size: 1.6rem !important;
+        margin-bottom: 14px !important;
+    }
+
+    #btn-start-game-instructions {
+        padding: 12px 30px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* --- Leaderboard Modal --- */
+    #modal-leaderboard-game {
+        width: 96% !important;
+        padding: 14px !important;
+        border-radius: 24px !important;
+    }
+
+    #modal-leaderboard-game h2 {
+        font-size: 1.5rem !important;
+    }
+
+    #leaderboard-list-game {
+        max-height: 200px !important;
+    }
+
+    #btn-close-leaderboard-game {
+        padding: 10px 40px !important;
+        font-size: 1.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- HUD --- */
+    .hud-bar {
+        padding: 5px 12px;
+        gap: 8px;
+    }
+
+    .question-tracker {
+        font-size: 0.8rem;
+    }
+
+    .timer-display {
+        font-size: 0.8rem;
+        padding: 2px 8px;
+    }
+
+    /* --- Game Container --- */
+    .game-container {
+        padding: 0 10px;
+    }
+
+    /* --- Question --- */
+    .question-text {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    /* --- Options --- */
+    .options-container {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .option-btn {
+        padding: 11px;
+        font-size: 0.88rem;
+    }
+
+    /* --- Submit --- */
+    .submit-btn {
+        padding: 10px 36px;
+        font-size: 1rem;
+    }
+
+    /* --- Footer --- */
+    .btn-back,
+    .btn-settings {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* --- Feedback --- */
+    .feedback-title {
+        font-size: 1.7rem;
+    }
+
+    .feedback-image {
+        font-size: 3rem;
+    }
+
+    .feedback-sentence-pill,
+    .feedback-score-pill {
+        font-size: 0.85rem;
+    }
+
+    /* --- Results --- */
+    .results-title {
+        font-size: 1.6rem !important;
+    }
+
+    .results-stats p {
+        font-size: 0.95rem;
+    }
+
+    .btn-save-score,
+    .btn-next-round,
+    .btn-leaderboard-results {
+        font-size: 0.95rem !important;
+        padding: 10px 20px !important;
+    }
+}
