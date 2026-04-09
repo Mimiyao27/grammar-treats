@@ -1,0 +1,38 @@
+# Walkthrough - Shuffled Questions in Pop the Balloon
+
+I have implemented a shuffling mechanism for the "Pop the Balloon" game to ensure that the questions and their internal choices appear in a random order every time the game is played.
+
+## Changes Made
+
+### [poptheballoon.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/poptheballoon/poptheballoon.js)
+
+1.  **Added `shuffleArray` Utility**:
+    Implemented a Fisher-Yates shuffle function to handle randomization of arrays.
+    
+    ```javascript
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+    ```
+
+2.  **Randomized Questions and Choices**:
+    Before the game starts, the `questions` array is now shuffled. Additionally, each question's `choices` array is shuffled to ensure the correct answer is not always on the same balloon.
+
+    ```javascript
+    shuffleArray(questions);
+    questions.forEach(q => {
+        if (q.choices) shuffleArray(q.choices);
+    });
+    ```
+
+## Verification Results
+
+- **Randomization**: Verified that refreshing the game results in a different starting question and different balloon positions for choices.
+- **Game Logic**: Confirmed that the correct answer logic still correctly identifies the right punctuation, even when shuffled.
+- **UI Integrity**: The question tracker still correctly displays "Question X of 10".
+
+> [!TIP]
+> This change enhances replayability by ensuring players cannot simply memorize the order of answers.

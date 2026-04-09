@@ -1,0 +1,38 @@
+# Implementation Plan - Add HUD Bar to Capitalization Game
+
+Add a top HUD (Heads-Up Display) bar to the Capitalization game to match the visual style and layout of the "Arrange the Word" game.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The existing Question Tracker and Timer layout in the header will be replaced by a floating HUD bar at the top of the screen.
+
+## Proposed Changes
+
+### [Component: Capitalization Game UI]
+
+#### [MODIFY] [index.html](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/index.html)
+- Add a `<div class="top-hud">` structure at the top of the body.
+- Remove the `header-main-row` from the `<header>` element.
+- Ensure the instruction remains in the header.
+
+#### [MODIFY] [capitalization.css](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/capitalization.css)
+- Import HUD styles from Arrange the Word (adapted for Capitalization colors if necessary).
+- Include `.top-hud`, `.hud-bar`, `.timer-icon`, `.timer-display`.
+- Adjust `.game-container` and `.game-header-top` margins to fit the HUD.
+
+#### [MODIFY] [capitalization.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/capitalization.js)
+- Update code to reference the new HUD elements.
+- Change how the question tracker is updated (from separate spans to a single text string).
+
+## Verification Plan
+
+### Automated Tests
+- Use the browser tool to:
+    - Verify the HUD bar is centered at the top.
+    - Verify the question tracker updates when moving to the next question.
+    - Verify the timer continues to work within the HUD display.
+
+### Manual Verification
+- Check responsiveness on different screen widths in the browser.
+- Ensure the HUD doesn't overlap with the instructional text.

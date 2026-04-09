@@ -1,0 +1,31 @@
+# Enforce Authentication on Game Pages
+
+This plan aims to prevent users from accessing specific game pages if they are not signed in.
+
+## Proposed Changes
+
+We will add a check for the `loggedInEmail` in `localStorage` at the beginning of each game's main JavaScript file. If the email is missing (meaning the user is not logged in), they will be redirected to the root `index.html`.
+
+### Game Components
+
+#### [MODIFY] [arrangetheword.js](file:///c:/Users/Admin/Downloads/Grammar%20Treatsv15.21-20260409T152143Z-3-001/Grammar%20Treatsv15.21/games/arrange-the-word/arrangetheword.js)
+#### [MODIFY] [capitalization.js](file:///c:/Users/Admin/Downloads/Grammar%20Treatsv15.21-20260409T152143Z-3-001/Grammar%20Treatsv15.21/games/capitalization/capitalization.js)
+#### [MODIFY] [proficiency.js](file:///c:/Users/Admin/Downloads/Grammar%20Treatsv15.21-20260409T152143Z-3-001/Grammar%20Treatsv15.21/games/grammar-proficiency/proficiency.js)
+#### [MODIFY] [punctuation.js](file:///c:/Users/Admin/Downloads/Grammar%20Treatsv15.21-20260409T152143Z-3-001/Grammar%20Treatsv15.21/games/punctuation/punctuation.js)
+#### [MODIFY] [correction.js](file:///c:/Users/Admin/Downloads/Grammar%20Treatsv15.21-20260409T152143Z-3-001/Grammar%20Treatsv15.21/games/sentence-correction/correction.js)
+
+The following block will be added after the "Fresh Session Check":
+
+```javascript
+// --- Authentication Check ---
+if (!localStorage.getItem('loggedInEmail')) {
+    window.location.href = '/';
+}
+```
+
+## Verification Plan
+
+### Manual Verification
+- Attempt to access any of the game URLs directly while not logged in.
+- Verify that the browser redirects to the landing page (`index.html`).
+- Log in and verify that the game pages are accessible normally.

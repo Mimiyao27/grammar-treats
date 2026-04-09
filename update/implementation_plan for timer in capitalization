@@ -1,0 +1,41 @@
+# Implementation Plan - Add Timer to Capitalization Game
+
+Add a 1-minute timer for each question in the Capitalization game. When the timer runs out, the current progress is auto-submitted.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The timer will be set to 60 seconds (1 minute) per question. If the user doesn't submit in time, the game will automatically process their current corrections as the final answer for that question.
+
+## Proposed Changes
+
+### [Component: Capitalization Game]
+
+#### [MODIFY] [index.html](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/index.html)
+- Add a timer display element (e.g., `<div id="timer-display" class="timer-display">1:00</div>`) in the `game-header-top` section.
+
+#### [MODIFY] [capitalization.css](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/capitalization.css)
+- Style the `timer-display` with a premium look, possibly including a pulsing effect or color change (e.g., turning red) when time is low.
+
+#### [MODIFY] [capitalization.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/capitalization.js)
+- Add `timeLeft` and `timerInterval` variables.
+- Implement `startTimer()` function:
+    - Resets `timeLeft` to 60 seconds.
+    - Updates UI every second.
+    - If `timeLeft` reaches 0, calls `btnSubmit.onclick()`.
+- Implement `stopTimer()` function:
+    - Clears the interval.
+- Call `startTimer()` inside `loadQuestion()`.
+- Call `stopTimer()` inside `btnSubmit.onclick()`.
+
+## Verification Plan
+
+### Automated Tests
+- Since this is a UI-heavy change, I will use the browser tool to:
+    - Load the game and verify the timer is visible.
+    - Wait for the timer to count down.
+    - Verify that the timer stops when clicking submit.
+    - Verify that the game auto-submits when the timer reaches 0.
+
+### Manual Verification
+- Manually play through a few questions to ensure the timer resets properly and triggers the correctly.

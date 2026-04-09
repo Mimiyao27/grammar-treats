@@ -1,0 +1,50 @@
+# Implementation Plan - Rename Pop the Balloon to Punctuation
+
+The goal is to rename the "Pop the Balloon" game to "Punctuation" throughout the application for better clarity and alignment with the game's actual content.
+
+## User Review Required
+
+> [!IMPORTANT]
+> This change involves renaming directories and files. If you have any external bookmarks or links pointing directly to `/games/poptheballoon/`, they will need to be updated to `/games/punctuation/`.
+
+## Proposed Changes
+
+### Renaming Directory and Files
+
+#### [MODIFY] [games/poptheballoon](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/poptheballoon) -> [games/punctuation](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/punctuation)
+Rename the entire game directory.
+
+#### [MODIFY] `games/punctuation/poptheballoon.js` -> `games/punctuation/punctuation.js`
+#### [MODIFY] `games/punctuation/poptheballoon.css` -> `games/punctuation/punctuation.css`
+
+---
+
+### Updating File Contents
+
+#### [MODIFY] [index.html](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/punctuation/index.html)
+- Update `<title>` from "Pop the Balloon | Grammar Treats" to "Punctuation | Grammar Treats".
+- Update stylesheet link from `poptheballoon.css` to `punctuation.css`.
+- Update script source from `poptheballoon.js` to `punctuation.js`.
+
+#### [MODIFY] [punctuation.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/punctuation/punctuation.js)
+- Update code comments and console logs from "Pop the Balloon" to "Punctuation".
+
+#### [MODIFY] [punctuation.css](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/punctuation/punctuation.css)
+- Update CSS comments to reflect the new game name.
+
+---
+
+### Updating External References
+
+#### [MODIFY] [gamescript.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/js/gamescript.js)
+- Update Level 2 click listener redirect from `/games/poptheballoon` to `/games/punctuation`.
+
+## Verification Plan
+
+### Manual Verification
+- Navigate to the dashboard.
+- Click "Start Game".
+- Select Level 2.
+- Verify that it redirects to `/games/punctuation/`.
+- Verify that the game loads correctly (styles, logic, resources).
+- Check the browser tab title and console for correct naming.

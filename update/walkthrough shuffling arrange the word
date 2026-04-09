@@ -1,0 +1,23 @@
+# Walkthrough - Shuffling Improvements in Arrange the Word
+
+I have successfully improved the shuffling mechanism for the "Arrange the Word" game. The logic now ensures that both the selection of questions and the arrangement of words in the pool are randomized more effectively.
+
+## Changes Made
+
+### Game Logic
+
+#### [arrangetheword.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/arrange-the-word/arrangetheword.js)
+- **Improved Word Shuffling**: Replaced the biased `sort()` method with the Fisher-Yates `shuffleArray` algorithm in `loadQuestion()`. This ensures that words are truly randomized every time a question is loaded.
+- **Verified Question Randomization**: Confirmed that `initGame()` correctly uses `shuffleArray` on the main `questions` list at the start of each game session.
+
+## Verification Results
+
+### Browser Testing
+I verified the changes using a browser subagent. Across multiple sessions and refreshes:
+- The starting question was different each time.
+- The word pool order for the same question was randomized on subsequent appearances.
+
+![Verification Recording](file:///C:/Users/PC2/.gemini/antigravity/brain/a7835b84-d49f-4e7f-ab1d-3c128379f175/verify_shuffling_1775741079997.webp)
+
+> [!TIP]
+> Each time a player reloads or restarts the game, they will now experience a truly randomized set and sequence of words, enhancing the learning experience.

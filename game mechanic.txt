@@ -1,0 +1,143 @@
+GAME MECHANICS
+
+1. Scoring and Treat Collection
+
+Players earn points for performance and treats as a progression currency.
+Points determine leaderboard ranking, while treats are used to unlock new levels.
+
+Per Question Rewards:
+
+Correct Answer: +10 points, +2 treats
+
+Incorrect Answer: +2 points, 0 treats
+
+
+
+---
+
+2. Score Saving and Progress Tracking
+
+After completing each level, players are required to manually save their score to record their progress.
+
+Only saved scores will:
+
+Count toward the leaderboard
+
+Be included in total points and treats
+
+Be used for unlocking the next level
+
+
+Unsaved progress will not be recorded, encouraging responsibility and intentional progression.
+
+
+
+---
+
+3. Level Structure and Unlocking
+
+The game consists of five levels, each focusing on a specific grammar skill:
+
+Level 1: Capitalization
+
+Level 2: Punctuation
+
+Level 3: Sentence Structure
+
+Level 4: Verb Usage
+
+Level 5: Comprehension
+
+
+Starting Point:
+
+Only Level 1 is unlocked at the beginning.
+
+
+Level Format:
+
+Each level contains 10 questions
+
+Maximum per level: 100 points and 20 treats
+
+
+Treat Requirements to Unlock Levels:
+
+Level 1 - 21 treats to Unlock Level 2 
+Level 2 - 36 total treats to Unlock Level 3
+Level 3 - 111 total treats to Unlock Level 4
+Level 4 - 186 total treats to Unlock Level 5
+
+
+Note:
+Treats are cumulative. Players who do not meet the required number must replay previous levels to earn more treats, ensuring mastery before progression.
+
+
+---
+
+4. Performance Rankings
+
+The system tracks and encourages competitive and consistent performance.
+
+Ranking Criteria:
+
+Total points earned
+
+Total treats collected
+
+Accuracy per level
+
+
+
+---
+
+5. Objectives and Challenges
+
+Main Goal:
+To achieve a high score, players must understand and apply each grammar topic correctly. Success in the game depends not just on guessing, but on improving grammar skills through practice and learning.
+
+Specific Goals:
+- Develop a clear understanding of each grammar topic
+- Apply correct grammar rules consistently
+- Achieve high scores through accuracy and mastery
+- Collect enough treats to unlock higher levels
+
+Gameplay Challenges May Include:
+- Time limits
+- Perfect score targets
+- Bonus streak mechanics
+
+Consequence for Mistakes:
+- Incorrect answers give fewer points and no treats
+- Players are encouraged to review feedback, learn from mistakes, and retry levels to improve both score and understanding
+
+---
+
+6. Feedback System
+
+Correct Answer: Provides positive visual and textual reinforcement
+
+Incorrect Answer: Displays the correct answer with a clear explanation to support learning
+
+
+
+---
+
+7. Bonus Rewards (Optional)
+
+Streak Bonus: +5 points for every 3 consecutive correct answers
+
+Perfect Score Bonus: +2 treats for achieving 10/10 in a level
+
+
+
+---
+
+8. Achievement Recognition
+
+Objective: Reward overall progress and dedication.
+
+Players who collect 80–100 treats will receive a certificate of achievement
+
+
+This system allows minor mistakes while still encouraging consistent effort and high performance.

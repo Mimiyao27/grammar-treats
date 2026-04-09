@@ -7,6 +7,8 @@
     <title>Dashboard | Grammar Treats</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
 </head>
 
 <body>
@@ -38,14 +40,21 @@
                         <path
                             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                     </svg>
-                    about us
+                    About Us
                 </a>
                 <a href="#" class="nav-link" id="nav-services">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM5 15h14v2H5zm0-4h14v2H5zm0-4h14v2H5z" />
                     </svg>
-                    services
+                    Our Goals
+                </a>
+                <a href="#" class="nav-link" id="nav-profile">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+                    </svg>
+                    Profile
                 </a>
                 <a href="#" class="nav-link nav-signup" id="logout-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -68,7 +77,8 @@
 
         <!-- Center Logo -->
         <div class="dash-logo">
-            <img src="/assets/images/logo-bg1.png" alt="Grammar Treats" class="dash-logo-img">
+            <img src="/assets/images/logo-dashboard.png" alt="Grammar Treats" class="dash-logo-img">
+
         </div>
 
         <!-- Center Menu -->
@@ -86,7 +96,7 @@
                     </svg>
                     <span>Leaderboard</span>
                 </button>
-                <button class="btn-dash btn-howtoplay">
+                <button class="btn-dash btn-howtoplay" id="dash-btn-howtoplay">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -105,6 +115,273 @@
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="modal-overlay"></div>
 
+    <!-- Our Goals Modal -->
+    <div class="modal modal-goals" id="modal-goals">
+        <button class="modal-close-red" id="close-goals" aria-label="Close modal">&times;</button>
+        <div class="modal-goals-inner">
+            <h2 class="modal-goals-title">Goal of the Online Web Application</h2>
+            <div class="modal-goals-content">
+                <p>The goal of the online web application is to help Grade 10 students improve their grammar skills in a
+                    simple, engaging, and effective way. It aims to address common difficulties in punctuation,
+                    capitalization, verb tense, subject–verb agreement, and sentence structure by providing interactive
+                    and easy-to-follow activities.</p>
+                <p>The application is designed to support the remedial grammar program by offering game-based exercises,
+                    guided lessons, and practice tasks that students can use independently. It also aims to help
+                    students apply grammar rules correctly, think critically through activities like error correction
+                    and sentence building, and improve their confidence in writing.</p>
+                <p>Overall, the web application seeks to make grammar learning more enjoyable while helping students
+                    develop clear, correct, and meaningful written communication.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About the Researchers Modal -->
+    <div class="modal modal-about" id="modal-about">
+        <button class="modal-close-red" id="close-about" aria-label="Close modal">&times;</button>
+        <div class="modal-about-inner">
+            <h2 class="modal-about-title">About the Researchers</h2>
+            <div class="modal-about-content">
+                <p>We, the researchers, are third-year English majors from Bulacan State University – Bustos Campus. As
+                    part of our academic endeavor, we are currently engaged in the creation and development of a grammar
+                    remedial syllabus designed to support learners in improving their grammatical competence.</p>
+                <p>In addition to this, we are collaboratively developing an online web application that aligns with and
+                    complements our remedial syllabus. This platform aims to provide accessible, interactive, and
+                    effective learning materials that will help students enhance their understanding and application of
+                    grammar in meaningful ways.</p>
+                <p>Through this project, we strive to integrate our knowledge, skills, and passion for teaching to
+                    create a practical and innovative tool that addresses the needs of learners in grammar development.
+                </p>
+            </div>
+            <div class="team-section">
+                <h3 class="team-title">Developers</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="member-img-wrapper">
+                            <img src="../assets/images/OurTeam_Marjorie.jpeg" alt="Marjorie">
+                        </div>
+                        <p class="member-name">Alcantara, Marjorie SJ.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="member-img-wrapper">
+                            <img src="../assets/images/OurTeam_Cristy.jpeg" alt="Cristy">
+                        </div>
+                        <p class="member-name">Catacutan, Cristy H.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="member-img-wrapper">
+                            <img src="../assets/images/OurTeam_Jay_Vee1.jpg" alt="Jay Vee">
+                        </div>
+                        <p class="member-name">Chico, Jay Vee S.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="member-img-wrapper">
+                            <img src="../assets/images/OurTeam_Elhane.jpeg" alt="Elhane">
+                        </div>
+                        <p class="member-name">De Leon, Hasmien Elhane V.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="member-img-wrapper">
+                            <img src="../assets/images/OurTeam_Mahalyn1.jpeg" alt="Mahalyn">
+                        </div>
+                        <p class="member-name">Nicolas, Mahalyn C.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="member-img-wrapper">
+                            <img src="../assets/images/OurTeam_Loraine1.jpeg" alt="Loraine">
+                        </div>
+                        <p class="member-name">Tolentino, Loraine Carla S.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Play Modal -->
+    <div class="modal modal-howtoplay" id="modal-howtoplay" style="max-width: 800px;">
+        <button class="modal-close-red" id="close-howtoplay" aria-label="Close modal">&times;</button>
+        <div class="modal-howtoplay-inner">
+            <h2 class="modal-howtoplay-title"
+                style="font-family: var(--font-display); font-size: 2.5rem; text-align: center; margin-bottom: 25px;">
+                GAME MECHANICS</h2>
+            <div class="modal-howtoplay-content" style="max-height: 60vh; overflow-y: auto; padding-right: 15px;">
+
+                <section style="margin-bottom: 30px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-cyan); padding-bottom: 8px; margin-bottom: 15px;">
+                        1. Scoring and Treat Collection</h3>
+                    <p>Players earn points for performance and treats as a progression currency. Points determine
+                        leaderboard ranking, while treats are used to unlock new levels.</p>
+                    <div
+                        style="background: rgba(122,193,66,0.1); padding: 15px; border-radius: 12px; margin-top: 10px;">
+                        <p style="margin-bottom: 8px;"><strong>Per Question Rewards:</strong></p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li style="margin-bottom: 5px;">✅ <strong>Correct Answer:</strong> +10 points, +2 treats
+                            </li>
+                            <li>❌ <strong>Incorrect Answer:</strong> +2 points, 0 treats</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 25px 0;">
+
+                <section style="margin-bottom: 30px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-orange); padding-bottom: 8px; margin-bottom: 15px;">
+                        2. Score Saving and Progress Tracking</h3>
+                    <p>After completing each level, players are required to <strong>manually save</strong> their score
+                        to record their progress. Only saved scores will:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li style="margin-bottom: 5px;">Count toward the leaderboard</li>
+                        <li style="margin-bottom: 5px;">Be included in total points and treats</li>
+                        <li>Be used for unlocking the next level</li>
+                    </ul>
+                    <p style="margin-top: 10px; font-style: italic; color: var(--accent-red);">Note: Unsaved progress
+                        will not be recorded, encouraging responsibility and intentional progression.</p>
+                </section>
+
+                <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 25px 0;">
+
+                <section style="margin-bottom: 30px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-green); padding-bottom: 8px; margin-bottom: 15px;">
+                        3. Level Structure and Unlocking</h3>
+                    <p>The game consists of five levels, each focusing on a specific grammar skill:</p>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 15px 0;">
+                        <div
+                            style="background: var(--white); padding: 10px; border-radius: 8px; border: 2px solid var(--accent-green); text-align: center;">
+                            <strong>Level 1:</strong><br>Capitalization
+                        </div>
+                        <div
+                            style="background: var(--white); padding: 10px; border-radius: 8px; border: 2px solid var(--accent-blue); text-align: center;">
+                            <strong>Level 2:</strong><br>Punctuation Marks
+                        </div>
+                        <div
+                            style="background: var(--white); padding: 10px; border-radius: 8px; border: 2px solid var(--accent-yellow); text-align: center;">
+                            <strong>Level 3:</strong><br> Grammar Proficiency
+                        </div>
+                        <div
+                            style="background: var(--white); padding: 10px; border-radius: 8px; border: 2px solid var(--accent-orange); text-align: center;">
+                            <strong>Level 4:</strong><br>Arrange the Words
+                        </div>
+                        <div
+                            style="background: var(--white); padding: 10px; border-radius: 8px; border: 2px solid var(--accent-red); text-align: center;">
+                            <strong>Level 5:</strong><br>Sentence Correction
+                        </div>
+                    </div>
+                    <p><strong>Treat Requirements to Unlock:</strong></p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li style="margin-bottom: 5px;"><strong>Unlock Level 2:</strong> 21 total treats</li>
+                        <li style="margin-bottom: 5px;"><strong>Unlock Level 3:</strong> 36 total treats</li>
+                        <li style="margin-bottom: 5px;"><strong>Unlock Level 4:</strong> 111 total treats</li>
+                        <li><strong>Unlock Level 5:</strong> 186 total treats</li>
+                    </ul>
+                    <p class="howtoplay-note">Treats are cumulative. Players who do not meet the required number must
+                        replay previous levels to earn more treats.</p>
+                </section>
+
+                <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 25px 0;">
+
+                <section style="margin-bottom: 30px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-cyan); padding-bottom: 8px; margin-bottom: 15px;">
+                        4. Performance Rankings</h3>
+                    <p>The system tracks and encourages competitive and consistent performance based on:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li style="margin-bottom: 5px;">Total points earned</li>
+                        <li style="margin-bottom: 5px;">Total treats collected</li>
+                        <li>Accuracy across all levels</li>
+                    </ul>
+                </section>
+
+                <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 25px 0;">
+
+                <section style="margin-bottom: 30px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-blue); padding-bottom: 8px; margin-bottom: 15px;">
+                        5. Objectives and Challenges</h3>
+                    <p><strong>Main Goal:</strong> Achieve a high score by understanding and applying each grammar
+                        topic. Success depends on master, not guessing.</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li style="margin-bottom: 5px;">Develop clear understanding of grammar topics</li>
+                        <li style="margin-bottom: 15px;">Apply rules consistently and achieve mastery</li>
+                    </ul>
+                    <p><strong>Challenges:</strong> Time limits, perfect score targets, and bonus streaks.</p>
+                </section>
+
+                <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 25px 0;">
+
+                <section style="margin-bottom: 30px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-green); padding-bottom: 8px; margin-bottom: 15px;">
+                        6. Feedback System</h3>
+                    <div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 10px;">
+                        <div class="howtoplay-feedback-box howtoplay-feedback-correct">
+                            <p><strong>Correct:</strong> Positive visual and textual reinforcement.</p>
+                        </div>
+                        <div class="howtoplay-feedback-box howtoplay-feedback-incorrect">
+                            <p><strong>Incorrect:</strong> Displays the correct answer with a clear explanation.</p>
+                        </div>
+                    </div>
+                </section>
+                <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 25px 0;">
+                <section style="margin-bottom: 10px;">
+                    <h3
+                        style="color: var(--blue); font-size: 1.4rem; border-bottom: 2px solid var(--accent-cyan); padding-bottom: 8px; margin-bottom: 15px;">
+                        7. Achievement Recognition</h3>
+                    <div
+                        style="text-align: center; background: var(--white); color: var(--blue-dark); padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🏆</div>
+                        <p style="font-size: 1.1rem; margin-bottom: 10px;">Collect <strong>186-200 treats</strong> to
+                            receive your</p>
+                        <h4 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--accent-yellow);">
+                            Certificate of Achievement</h4>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal modal-profile" id="modal-profile">
+        <button class="modal-close-red" id="close-profile" aria-label="Close modal">&times;</button>
+        <div class="modal-profile-inner">
+            <!-- <div class="modal-profile-avatar">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                </svg>
+            </div> -->
+            <h2 class="modal-profile-title">Edit Profile</h2>
+            <form id="form-profile" class="modal-profile-form" novalidate>
+                <div class="profile-field-group">
+                    <label for="profile-firstname">First Name</label>
+                    <input type="text" id="profile-firstname" class="profile-input" placeholder="Enter first name"
+                        autocomplete="given-name">
+                    <span class="profile-field-error" id="err-firstname"></span>
+                </div>
+                <div class="profile-field-group">
+                    <label for="profile-lastname">Last Name</label>
+                    <input type="text" id="profile-lastname" class="profile-input" placeholder="Enter last name"
+                        autocomplete="family-name">
+                    <span class="profile-field-error" id="err-lastname"></span>
+                </div>
+                <div class="profile-field-group">
+                    <label for="profile-username">Username</label>
+                    <div class="profile-input-wrapper">
+                        <input type="text" id="profile-username" class="profile-input" placeholder="Enter username"
+                            autocomplete="username">
+                        <span class="profile-username-check" id="username-check-icon"></span>
+                    </div>
+                    <span class="profile-field-error" id="err-username"></span>
+                </div>
+                <div id="profile-success-msg" class="profile-success-msg" style="display:none;">Profile updated
+                    successfully! ✅</div>
+                <button type="submit" class="btn-profile-save" id="btn-profile-save">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Logout Modal -->
     <div class="modal modal-play" id="modal-logout" style="max-width: 400px; padding: 40px;">
         <div class="modal-icon">
@@ -122,6 +399,42 @@
         </div>
     </div>
 
+    <!-- Leaderboard Modal -->
+    <div class="modal" id="modal-leaderboard"
+        style="max-width: 750px; padding: 20px; border: none; background: #d7d395; box-shadow: none;">
+        <h2
+            style="text-align: center; color: var(--blue-dark); font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 20px; z-index: 2; position: relative;">
+            Overall</h2>
+        <div
+            style="background: #7ba6cb; border-radius: 20px; padding: 30px 20px; color: white; border: 4px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 11V3H8v6H2v12h20V11h-6zM10 5h4v14h-4V5zM4 11h4v8H4v-8zm16 8h-4v-6h4v6z" />
+                </svg>
+                <h3 style="font-family: var(--font-display); font-size: 2.5rem; margin: 0; letter-spacing: 1px;">
+                    Leaderboard</h3>
+            </div>
+
+            <div
+                style="display: grid; grid-template-columns: 80px 2fr 1.5fr 1.5fr 1fr; gap: 10px; font-weight: 800; text-align: center; margin-bottom: 15px; font-size: 1.1rem; align-items: center;">
+                <div>Rank</div>
+                <div style="text-align: left; padding-left: 10px;">Name</div>
+                <div>Points</div>
+                <div style="display: flex; align-items: center; justify-content: center;">Treats Earned</div>
+                <div>Accuracy</div>
+            </div>
+
+            <div id="leaderboard-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                <!-- Leaderboard rows will be populated here by JS -->
+                <div style="text-align: center; padding: 30px;">Loading leaderboard data...</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="btn-close-leaderboard" class="btn-primary"
+                style="background: var(--blue-dark); padding: 12px 60px; font-size: 1.2rem; font-weight: 800; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 4px solid white; border-radius: 50px;">Close</button>
+        </div>
+    </div>
+
 
     <!-- Level Selection Screen -->
     <div class="level-screen" id="level-screen" style="display: none;">
@@ -134,36 +447,36 @@
 
         <div class="level-cards-container">
             <button class="level-card card-green" id="level-1">
-                <span class="level-text">Level<br>1</span>
+                <!-- <span class="level-text">Level<br>1</span>
                 <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M8 5v14l11-7z" />
-                </svg>
+                </svg> -->
             </button>
-            <button class="level-card card-blue" id="level-2">
-                <span class="level-text">Level<br>2</span>
+            <button class="level-card card-blue locked" id="level-2" disabled>
+                <!-- <span class="level-text">Level<br>2</span>
                 <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M8 5v14l11-7z" />
-                </svg>
+                </svg> -->
             </button>
-            <button class="level-card card-yellow" id="level-3">
-                <span class="level-text">Level<br>3</span>
+            <button class="level-card card-yellow locked" id="level-3" disabled>
+                <!-- <span class="level-text">Level<br>3</span>
                 <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M8 5v14l11-7z" />
-                </svg>
+                </svg> -->
             </button>
             <button class="level-card card-orange locked" id="level-4" disabled>
-                <span class="level-text">Level<br>4</span>
+                <!-- <span class="level-text">Level<br>4</span>
                 <svg class="level-icon lock-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path
                         d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                </svg>
+                </svg> -->
             </button>
             <button class="level-card card-red locked" id="level-5" disabled>
-                <span class="level-text">Level<br>5</span>
+                <!-- <span class="level-text">Level<br>5</span>
                 <svg class="level-icon lock-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path
                         d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                </svg>
+                </svg> -->
             </button>
         </div>
 
@@ -314,9 +627,53 @@
         </div>
     </div>
 
+    <!-- Certificate Modal -->
+    <div class="modal" id="modal-certificate"
+        style="max-width: 1000px; max-height: 95vh; padding: 10px; border: none; background: #fdf6e3; border-radius: 40px; text-align: center; overflow-y: auto;">
+        <div style="position: relative; padding: 20px;">
+            <button id="btn-close-certificate"
+                style="position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; font-weight: bold; z-index: 10; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;">&times;</button>
+            <div id="cert-capture-area"
+                style="background: white; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 8px solid #7ba6cb; position: relative; display: inline-block; width: 100%;">
+                <img src="../assets/images/CERTIFICATE GRAMMAR TREATS.png" alt="Grammar Treats Certificate"
+                    style="width: 100%; height: auto; border-radius: 10px; display: block;">
+
+                <!-- Dynamic Text Overlays -->
+                <div id="cert-full-name"
+                    style="position: absolute; top: 64%; left: 50%; transform: translate(-50%, -130%); width: 100%; font-family: 'Great Vibes', cursive; font-size: 5rem; font-weight: 400; color: #1a1a1b;">
+                    [Firstname] [Lastname]
+                </div>
+
+                <div
+                    style="position: absolute; top: 60%; left: 50%; transform: translateX(-50%); width: 75%; font-family: var(--font-body); font-size: 1rem; line-height: 1.5; color: #333; font-weight: 700; text-align: center;">
+                    has successfully completed the Grammar Treats Web Application, demonstrating dedication, effort, and
+                    active participation in enhancing their grammar proficiency.
+                </div>
+
+                <div
+                    style="position: absolute; top: 73%; left: 50%; transform: translateX(-50%); width: 75%; font-family: var(--font-body); font-size: 1.1rem; line-height: 1.5; color: #333; font-weight: 700; text-align: center;">
+                    With a recorded accuracy of <span id="cert-avgaccu"
+                        style="color: #3b5998; font-size: 1.4rem;">0</span>%, this achievement reflects the
+                    participant’s commitment to learning and continuous improvement.
+                </div>
+
+                <div
+                    style="position: absolute; top: 88%; left: 50%; transform: translate(-50%, -50%); width: 100%; font-family: var(--font-body); font-size: 1.2rem; color: #333; font-weight: 800;">
+                    Given this <span id="cert-day">1</span> of <span id="cert-month-year">January, 2024</span>.
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding-bottom: 10px; display: flex; gap: 15px; justify-content: center;">
+                <button id="btn-print-certificate" class="btn-primary"
+                    style="background: #3b5998; padding: 12px 60px; font-size: 1.5rem; font-weight: 800; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 4px solid white; border-radius: 50px; font-family: var(--font-display); cursor: pointer; transition: transform 0.2s;">Download
+                    Certificate</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/gamescript.js"></script>
     <!-- Settings -->

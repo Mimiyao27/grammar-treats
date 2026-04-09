@@ -1,0 +1,37 @@
+# Implementation Plan - Add "Our Team" Section
+
+This plan outlines the steps to add a responsive "Our Team" section to the "About the Researchers" modal in the Grammar Treats application.
+
+## User Review Required
+
+> [!IMPORTANT]
+> I found 6 team member images in `assets/images` (`Cristy`, `Elhane`, `Jay Vee`, `Loraine`, `Mahalyn`, `Marjorie`). I will use these instead of placeholders to make the section look complete.
+
+## Proposed Changes
+
+### [Component] About Us Modal
+
+#### [MODIFY] [index.html](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/index.html)
+- Add a new `<section class="team-section">` within the `.modal-about-inner` div, following the existing content.
+- Include a title "Our Team" and a grid of 6 cards, each containing:
+  - An image of the researcher.
+  - Their name.
+
+#### [MODIFY] [styles.css](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/css/styles.css)
+- Add styles for `.team-section`.
+- Implement a responsive grid using `display: grid`:
+  - Desktop: 3 columns.
+  - Tablet: 2 columns.
+  - Mobile: 1 column.
+- Style the member cards:
+  - Rounded corners for images.
+  - Centered text for names.
+  - Hover effects for a premium feel.
+
+## Open Questions
+- None.
+
+## Verification Plan
+
+### Manual Verification
+- I will use the browser tool to open the site and trigger the "About Us" modal to ensure the layout is correct and responsive across different screen sizes.

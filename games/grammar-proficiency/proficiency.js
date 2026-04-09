@@ -1,3 +1,14 @@
+// --- Fresh Session Check (Fresh Start on Close) ---
+if (!sessionStorage.getItem('gt_session_active')) {
+    ['loggedInEmail', 'firstname', 'settings-mode', 'settings-sound', 'settings-bgm', 'unlockedLevel', 'showLevelScreen', 'latestScore', 'latestTreats', 'showCertificatePopup'].forEach(k => localStorage.removeItem(k));
+    sessionStorage.setItem('gt_session_active', 'true');
+}
+
+// --- Authentication Check ---
+if (!localStorage.getItem('loggedInEmail')) {
+    window.location.href = '/';
+}
+
 // Grammar Proficiency Game Logic
 
 const questions = [
@@ -145,10 +156,34 @@ const finalTreats = document.getElementById("final-treats");
 const resultsPieChart = document.getElementById("results-pie-chart");
 const btnSaveScore = document.getElementById("btn-save-score");
 const btnNextRound = document.getElementById("btn-next-round");
+const finalTotalTreats = document.getElementById("final-total-treats");
 const btnBack = document.getElementById("btn-back");
+const btnLeaderboardResults = document.getElementById('btn-leaderboard-results');
+const modalLeaderboardGame = document.getElementById('modal-leaderboard-game');
+const btnCloseLeaderboardGame = document.getElementById('btn-close-leaderboard-game');
+const leaderboardListGame = document.getElementById('leaderboard-list-game');
+const modalOverlay = document.getElementById('modal-overlay');
+
+// Shuffle Array Utility (Fisher-Yates)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
 // Initialize Game
 function initGame() {
+    // Shuffle questions
+    shuffleArray(questions);
+    
+    // Shuffle options for each question and update correct index
+    questions.forEach(q => {
+        const correctAnswerText = q.options[q.correct];
+        shuffleArray(q.options);
+        q.correct = q.options.indexOf(correctAnswerText);
+    });
+
     loadQuestion();
     startTimer();
 }
@@ -248,7 +283,6 @@ function showFeedback(isCorrect) {
         nextQuestionBtn.innerText = "Next Question";
     }
 
-    feedbackTitle.innerText = isCorrect ? "Perfect!" : "Not quite!";
     if (isCorrect) {
         // Play correct sound
         if (correctSound) {
@@ -256,9 +290,26 @@ function showFeedback(isCorrect) {
             correctSound.play().catch(e => console.log("Sound play blocked", e));
         }
 
+        const correctTitles = [
+            "Perfect! Great job!",
+            "Well done! You got it right!",
+            "Nice! Keep it up!",
+            "Awesome! That's correct!"
+        ];
+        const randomTitle = correctTitles[Math.floor(Math.random() * correctTitles.length)];
+        feedbackTitle.innerText = randomTitle;
         feedbackTitle.classList.remove('title-wrong');
-        feedbackSubtitle.innerText = "You've won a slice of cake!";
-        feedbackImage.innerText = "🍰";
+
+        const rewards = [
+            { text: "You got it right! Enjoy this chocolate bar!", visual: "🍫" },
+            { text: "Correct! Here's a delicious cookie for you!", visual: "🍪" },
+            { text: "You did it! Enjoy this yummy donut!", visual: "🍩" },
+            { text: "You earned it! Have a juicy apple!", visual: "🍎" },
+            { text: "Right answer! Treat yourself to a slice of cake!", visual: "🍰" }
+        ];
+        const randomReward = rewards[Math.floor(Math.random() * rewards.length)];
+        feedbackSubtitle.innerText = randomReward.text;
+        feedbackImage.innerText = randomReward.visual;
         feedbackSentence.style.backgroundColor = "#4CAF50";
 
         // Trigger confetti for correct answer
@@ -278,13 +329,29 @@ function showFeedback(isCorrect) {
             incorrectSound.play().catch(e => console.log("Sound play blocked", e));
         }
 
+        const incorrectTitles = [
+            "Good effort!",
+            "You're getting better!",
+            "Almost there!",
+            "Keep going!"
+        ];
+        const randomTitle = incorrectTitles[Math.floor(Math.random() * incorrectTitles.length)];
+        feedbackTitle.innerText = randomTitle;
         feedbackTitle.classList.add('title-wrong');
-        feedbackSubtitle.innerText = "You've run out of cake.";
-        feedbackImage.innerText = "🍽️";
+
+        const retryMessages = [
+            { text: "The cupcake melted — but snacks are waiting next round!", visual: "🧁" },
+            { text: "The gummy bears escaped — better luck next time!", visual: "🍬" },
+            { text: "The pizza was too hot — keep trying for a slice!", visual: "🍕" },
+            { text: "Your ice cream melted — don't give up!", visual: "🍦" }
+        ];
+        const randomRetry = retryMessages[Math.floor(Math.random() * retryMessages.length)];
+        feedbackSubtitle.innerText = randomRetry.text;
+        feedbackImage.innerText = randomRetry.visual;
         feedbackSentence.style.backgroundColor = "#eb1e1e";
     }
     
-    feedbackScorePill.innerText = `Score: ${isCorrect ? '+100' : '0'}`;
+    feedbackScorePill.textContent = `Points: ${isCorrect ? '100' : '0'}`;
     feedbackTreatsPill.innerText = `Treats: ${isCorrect ? '10' : '0'}`;
     feedbackSentence.innerText = q.options[q.correct];
     feedbackExplanation.innerText = q.explanation;
@@ -322,17 +389,54 @@ function showResults() {
     const percentage = (correctCount / questions.length) * 100;
     
     // Populate player name
-    const playerName = localStorage.getItem('username') || localStorage.getItem('fullName') || 'Player';
+    const playerName = localStorage.getItem('firstname') || 'Player';
     const nameSpan = document.getElementById('player-name');
     if (nameSpan) nameSpan.innerText = playerName;
     
+    const resultsTitle = document.querySelector('.results-title');
+    const resultsSubtitle = document.querySelector('.results-subtitle');
+    if (resultsTitle && resultsSubtitle) {
+        if (correctCount < 7) {
+            resultsTitle.innerHTML = `Good Effort, <span id="player-name">${playerName}</span>!`;
+            resultsTitle.style.color = "#eb1e1e";
+            resultsSubtitle.textContent = "Let’s try again and beat this level.";
+        } else {
+            resultsTitle.innerHTML = `Great Job, <span id="player-name">${playerName}</span>!`;
+        }
+    }
+
     finalCorrect.innerText = `${correctCount}/${questions.length}`;
     finalPoints.innerText = score;
     finalTreats.innerText = treats;
+
+    // Fetch Total Cumulative Treats
+    (async () => {
+        const loggedInEmail = localStorage.getItem('loggedInEmail');
+        if (loggedInEmail && finalTotalTreats) {
+            try {
+                const { data: scores1 } = await supabaseClient.from('lvl1_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+                const { data: scores2 } = await supabaseClient.from('lvl2_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+                const { data: scores3 } = await supabaseClient.from('lvl3_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+                const { data: scores4 } = await supabaseClient.from('lvl4_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+                const { data: scores5 } = await supabaseClient.from('lvl5_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+                
+                let totalSaved = 0;
+                if (scores1) totalSaved += scores1.treats;
+                if (scores2) totalSaved += scores2.treats;
+                if (scores3) totalSaved += scores3.treats;
+                if (scores4) totalSaved += scores4.treats;
+                if (scores5) totalSaved += scores5.treats;
+                
+                finalTotalTreats.innerText = totalSaved;
+            } catch (e) {
+                console.error("Error fetching total treats:", e);
+            }
+        }
+    })();
     
     resultsPieChart.style.background = `conic-gradient(#4CAF50 0% ${percentage}%, #eb1e1e ${percentage}% 100%)`;
     
-    // Show with active class (matching poptheballoon)
+    // Show with active class (matching Punctuation)
     resultsOverlay.classList.add("active");
     
     // Unlock Level 4 upon completion
@@ -357,14 +461,39 @@ btnBack.addEventListener("click", () => {
     }
 });
 
-btnNextRound.addEventListener("click", () => {
-    // Ensure Level 4 is unlocked when returning to selection
-    const currentUnlocked = parseInt(localStorage.getItem("unlockedLevel") || "1");
-    if (currentUnlocked < 4) {
-        localStorage.setItem("unlockedLevel", "4");
+btnNextRound.addEventListener("click", async () => {
+    const loggedInEmail = localStorage.getItem('loggedInEmail');
+    let canUnlock = false;
+
+    if (loggedInEmail) {
+        try {
+            const { data: s1 } = await supabaseClient.from('lvl1_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+            const { data: s2 } = await supabaseClient.from('lvl2_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+            const { data: s3 } = await supabaseClient.from('lvl3_scores').select('treats').eq('user_email', loggedInEmail).maybeSingle();
+            
+            const total = (s1 ? s1.treats : 0) + (s2 ? s2.treats : 0) + (s3 ? s3.treats : 0);
+            if (total >= 111) {
+                canUnlock = true;
+            }
+        } catch (e) {
+            console.error("Error checking unlock condition:", e);
+        }
     }
-    localStorage.setItem('showLevelScreen', 'true');
-    window.location.href = "/dashboard/";
+
+    if (canUnlock) {
+        // Ensure Level 4 is unlocked when returning to selection
+        const currentUnlocked = parseInt(localStorage.getItem("unlockedLevel") || "1");
+        if (currentUnlocked < 4) {
+            localStorage.setItem("unlockedLevel", "4");
+            alert("Congratulations! Level 4 is now unlocked! 🍬");
+        }
+        localStorage.setItem('showLevelScreen', 'true');
+        window.location.href = "/dashboard/";
+    } else {
+        alert("You need at least 111 total treats saved (Level 1 + 2 + 3) to unlock Level 4. Keep practicing and don't forget to save your score!");
+        localStorage.setItem('showLevelScreen', 'true');
+        window.location.href = "/dashboard/";
+    }
 });
 
 // Review Logic
@@ -411,6 +540,11 @@ const SUPABASE_URL = 'https://eqylmnprsvewdxdsmfbl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxeWxtbnByc3Zld2R4ZHNtZmJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MTYxMDIsImV4cCI6MjA4ODk5MjEwMn0.SROuvHM08UcxJIhIO-UZMve7ShXoWhcUFoohSl_6MB4';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+const capitalizeName = (name) => {
+    if (!name) return "";
+    return name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+};
+
 if (btnSaveScore) {
     btnSaveScore.onclick = async () => {
         const loggedInEmail = localStorage.getItem('loggedInEmail');
@@ -419,6 +553,12 @@ if (btnSaveScore) {
             return;
         }
         const accuracy = Math.round((score / 100 / questions.length) * 100);
+
+        // Loading state
+        const originalText = btnSaveScore.innerText;
+        btnSaveScore.innerText = "Saving...";
+        btnSaveScore.disabled = true;
+
         try {
             const { data: existing, error: fetchErr } = await supabaseClient
                 .from('lvl3_scores')
@@ -447,7 +587,128 @@ if (btnSaveScore) {
             }
         } catch (err) {
             alert("Error saving score: " + (err.message || "Unknown Error"));
+        } finally {
+            btnSaveScore.innerText = originalText;
+            btnSaveScore.disabled = false;
         }
+    };
+}
+
+// --- Leaderboard Logic ---
+function generateMedal(rank) {
+    let colors = {};
+    if (rank === 1) {
+        colors = { bg: '#FFCA28', border: '#FFB300' }; // Gold
+    } else if (rank === 2) {
+        colors = { bg: '#E0E0E0', border: '#BDBDBD' }; // Silver
+    } else if (rank === 3) {
+        colors = { bg: '#cd7f32', border: '#b87333' }; // Bronze
+    } else {
+        return `<div style="font-size: 1.2rem; font-weight: 900; color: #3b5998;">${rank}</div>`;
+    }
+
+    return `
+        <div style="display: flex; justify-content: center;">
+            <div style="position: relative; display: inline-block; width: 44px; height: 50px;">
+                <svg width="34" height="20" viewBox="0 0 30 20" style="position: absolute; top: -5px; left: 5px; z-index: 1;">
+                    <path d="M0 0 L10 20 L15 15 L20 20 L30 0 Z" fill="#e74c3c" stroke="white" stroke-width="1.5" />
+                    <line x1="5" y1="0" x2="10" y2="10" stroke="white" stroke-width="1.5" />
+                    <line x1="25" y1="0" x2="20" y2="10" stroke="white" stroke-width="1.5" />
+                </svg>
+                <div style="position: absolute; bottom: 0; left: 2px; width: 40px; height: 40px; border-radius: 50%; background: ${colors.bg}; border: 3px solid ${colors.border}; display: flex; justify-content: center; align-items: center; color: white; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 2; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); font-size: 1.2rem;">${rank}</div>
+            </div>
+        </div>
+    `;
+}
+
+async function fetchLevel3LeaderboardData() {
+    if (!leaderboardListGame) return;
+    leaderboardListGame.innerHTML = '<div style="text-align: center; padding: 40px; font-size: 1.2rem; color: white;">Loading leaderboard data...</div>';
+
+    try {
+        const [usersRes, lvl3Res] = await Promise.all([
+            supabaseClient.from('users').select('email, firstname, lastname'),
+            supabaseClient.from('lvl3_scores').select('user_email, points, treats, accuracy')
+        ]);
+
+        const users = usersRes.data || [];
+        const lvl3Scores = lvl3Res.data || [];
+
+        const playerStats = {};
+        users.forEach(u => {
+            playerStats[u.email] = {
+                name: `${capitalizeName(u.firstname)} ${capitalizeName(u.lastname)}`,
+                points: 0,
+                treats: 0,
+                accuracy: 0,
+                hasScore: false
+            };
+        });
+
+        lvl3Scores.forEach(row => {
+            const email = row.user_email;
+            if (playerStats[email]) {
+                playerStats[email].points = row.points || 0;
+                playerStats[email].treats = row.treats || 0;
+                playerStats[email].accuracy = row.accuracy || 0;
+                playerStats[email].hasScore = true;
+            }
+        });
+
+        const leaderboard = Object.values(playerStats)
+            .filter(p => p.hasScore)
+            .sort((a, b) => b.points - a.points);
+
+        leaderboardListGame.innerHTML = '';
+
+        if (leaderboard.length === 0) {
+            leaderboardListGame.innerHTML = '<div style="text-align: center; padding: 40px; font-size: 1.2rem; color: white;">No players on the leaderboard yet!</div>';
+            return;
+        }
+
+        leaderboard.forEach((player, index) => {
+            const row = document.createElement('div');
+            row.style.display = 'grid';
+            row.style.gridTemplateColumns = '80px 2fr 1.5fr 1.5fr 1fr';
+            row.style.gap = '10px';
+            row.style.alignItems = 'center';
+            row.style.textAlign = 'center';
+            row.style.padding = '15px 0';
+            row.style.borderBottom = '1px solid rgba(255,255,255,0.2)';
+            row.style.fontWeight = '800';
+            row.style.color = 'white';
+
+            row.innerHTML = `
+                ${generateMedal(index + 1)}
+                <div style="text-align: left; padding-left: 10px;">${player.name}</div>
+                <div>${player.points.toLocaleString()}</div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <img src="../../assets/images/candy-nobg.png" style="width: 24px; height: 24px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));">
+                    ${player.treats}
+                </div>
+                <div>${player.accuracy}%</div>
+            `;
+            leaderboardListGame.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error('Error fetching leaderboard', error);
+        leaderboardListGame.innerHTML = '<div style="text-align: center; padding: 40px; font-size: 1.2rem; color: white;">Error loading leaderboard data.</div>';
+    }
+}
+
+if (btnLeaderboardResults && modalLeaderboardGame) {
+    btnLeaderboardResults.onclick = async () => {
+        modalLeaderboardGame.classList.add('active');
+        if (modalOverlay) modalOverlay.classList.add('active-leaderboard');
+        await fetchLevel3LeaderboardData();
+    };
+}
+
+if (btnCloseLeaderboardGame && modalLeaderboardGame) {
+    btnCloseLeaderboardGame.onclick = () => {
+        modalLeaderboardGame.classList.remove('active');
+        if (modalOverlay) modalOverlay.classList.remove('active-leaderboard');
     };
 }
 
@@ -550,5 +811,22 @@ if (settingsBtn && settingsPopover) {
 }
 
 initAudio();
-initGame();
 
+const instructionsOverlay = document.getElementById('instructions-overlay');
+const modalInstructions = document.getElementById('modal-instructions');
+const btnStartInstructions = document.getElementById('btn-start-game-instructions');
+
+if (instructionsOverlay && modalInstructions && btnStartInstructions) {
+    btnStartInstructions.addEventListener('click', () => {
+        instructionsOverlay.classList.remove('active');
+        modalInstructions.classList.remove('active');
+        initGame();
+        
+        // Audio requires interaction, so we start it here
+        if (bgMusic && bgMusic.paused) {
+            bgMusic.play().catch(e => console.log("Music play blocked", e));
+        }
+    });
+} else {
+    initGame();
+}

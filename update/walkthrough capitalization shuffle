@@ -1,0 +1,37 @@
+# Walkthrough - Question Shuffling for Capitalization Game
+
+I have implemented question shuffling for the Capitalization game to ensure that the order of questions is randomized each time a user starts the game.
+
+## Changes Made
+
+### Capitalization Game Logic
+#### [capitalization.js](file:///d:/CHAD/GRAMMAR%20TREATS%20APRIL%209%20FINALE/Grammar%20Treatsv15.13/games/capitalization/capitalization.js)
+- Added a `shuffleArray` function that implements the Fisher-Yates shuffle algorithm.
+- Updated the `initGame` function to call `shuffleArray(questions)` before loading the first question.
+
+```javascript
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // --- Start ---
+    function initGame() {
+        initAudio();
+        shuffleArray(questions); // Randomizes the question order
+        loadQuestion(0);
+    }
+```
+
+## Verification Results
+
+### Manual Verification
+I verified the shuffling functionality by opening the game in a browser and refreshing the page multiple times. 
+
+- **First Load:** The first question was "Mrs. Garcia, our English teacher...".
+- **First Refresh:** The first question changed to "During computer class...".
+- **Second Refresh:** The first question changed to "I helped my neighbor...".
+
+This confirms that the questions are being shuffled correctly at the start of each session.

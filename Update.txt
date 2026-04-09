@@ -1,0 +1,16 @@
+our team added
+our team in dashboard added
+1 minute timer in capitalization
+hud bar in capitalization like in arrange the word
+shuffle question in capitalization
+shuffle question in punctuation
+shuffle question in grammar-proficiency
+shuffle question in arrange-the-word
+shuffle question in sentence-correction
+renaming poptheballoon into punctuation
+update the image of our team
+changing treats in mechanic
+in sentence-correction when the timer ran out add get an explanation link below explanation content
+in result if the score/treats is lower than the passing grade to complete the level – Instead of Great Job and You’ve completed the first round of Grammar treats! It should be Good effort! Let’s try again and beat this level.
+adding instruction per level
+adding restriction in 5 games

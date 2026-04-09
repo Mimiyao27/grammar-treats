@@ -1,3 +1,9 @@
+// --- Fresh Session Check (Fresh Start on Close) ---
+if (!sessionStorage.getItem('gt_session_active')) {
+    ['loggedInEmail', 'firstname', 'settings-mode', 'settings-sound', 'settings-bgm', 'unlockedLevel', 'showLevelScreen', 'latestScore', 'latestTreats', 'showCertificatePopup'].forEach(k => localStorage.removeItem(k));
+    sessionStorage.setItem('gt_session_active', 'true');
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Elements
   const dashBtnStart = document.getElementById("dash-btn-start");
@@ -33,6 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
       levelScreen.style.display = "flex";
       document.body.style.overflow = "hidden";
       
+      // Play unlock/grow animation for level 1
+      if (level1Btn) {
+        level1Btn.classList.remove("unlock-animation");
+        void level1Btn.offsetWidth; // Trigger reflow
+        level1Btn.classList.add("unlock-animation");
+      }
+      
       /* 
       // Play background music
       if (window.bgMusic) {
@@ -61,54 +74,29 @@ document.addEventListener("DOMContentLoaded", () => {
   if (unlockedLevel >= 2 && level2Btn) {
     level2Btn.classList.remove("locked");
     level2Btn.disabled = false;
-    // Replace lock icon with play icon
-    const lockIcon = level2Btn.querySelector(".lock-icon");
-    if (lockIcon) {
-      lockIcon.outerHTML = `
-        <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      `;
-    }
+    if (level1Btn) level1Btn.classList.add("completed");
   }
 
   if (unlockedLevel >= 3 && level3Btn) {
     level3Btn.classList.remove("locked");
     level3Btn.disabled = false;
-    const lockIcon = level3Btn.querySelector(".lock-icon");
-    if (lockIcon) {
-      lockIcon.outerHTML = `
-        <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      `;
-    }
+    if (level2Btn) level2Btn.classList.add("completed");
   }
 
   if (unlockedLevel >= 4 && level4Btn) {
     level4Btn.classList.remove("locked");
     level4Btn.disabled = false;
-    const lockIcon = level4Btn.querySelector(".lock-icon");
-    if (lockIcon) {
-      lockIcon.outerHTML = `
-        <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      `;
-    }
+    if (level3Btn) level3Btn.classList.add("completed");
   }
 
   if (unlockedLevel >= 5 && level5Btn) {
     level5Btn.classList.remove("locked");
     level5Btn.disabled = false;
-    const lockIcon = level5Btn.querySelector(".lock-icon");
-    if (lockIcon) {
-      lockIcon.outerHTML = `
-        <svg class="level-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      `;
-    }
+    if (level4Btn) level4Btn.classList.add("completed");
+  }
+
+  if (unlockedLevel >= 6) {
+    if (level5Btn) level5Btn.classList.add("completed");
   }
 
   // Auto-show level selection if flag is set
@@ -152,6 +140,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // --- Dynamic UI Sync from script.js ---
+  document.addEventListener('progressRestored', (e) => {
+      const newUnlockedLevel = e.detail.unlockedLevel;
+      console.log(`UI Sync: Updating levels for Level ${newUnlockedLevel}`);
+      
+      // Reset all first
+      [level1Btn, level2Btn, level3Btn, level4Btn, level5Btn].forEach(btn => {
+          if (btn) {
+              btn.classList.add("locked");
+              btn.classList.remove("completed");
+              btn.disabled = true;
+          }
+      });
+      if (level1Btn) {
+          level1Btn.classList.remove("locked");
+          level1Btn.disabled = false;
+      }
+
+      if (newUnlockedLevel >= 2) {
+          if (level2Btn) { level2Btn.classList.remove("locked"); level2Btn.disabled = false; }
+          if (level1Btn) level1Btn.classList.add("completed");
+      }
+      if (newUnlockedLevel >= 3) {
+          if (level3Btn) { level3Btn.classList.remove("locked"); level3Btn.disabled = false; }
+          if (level2Btn) level2Btn.classList.add("completed");
+      }
+      if (newUnlockedLevel >= 4) {
+          if (level4Btn) { level4Btn.classList.remove("locked"); level4Btn.disabled = false; }
+          if (level3Btn) level3Btn.classList.add("completed");
+      }
+      if (newUnlockedLevel >= 5) {
+          if (level5Btn) { level5Btn.classList.remove("locked"); level5Btn.disabled = false; }
+          if (level4Btn) level4Btn.classList.add("completed");
+      }
+      if (newUnlockedLevel >= 6) {
+          if (level5Btn) level5Btn.classList.add("completed");
+      }
+  });
+
   // Launch Empty Level 1 when Level 1 is clicked
   if (level1Btn) {
     level1Btn.addEventListener("click", (e) => {
@@ -165,8 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (level2Btn) {
     level2Btn.addEventListener("click", (e) => {
       e.preventDefault();
-      // Redirect to Pop the Balloon game
-      window.location.href = "/games/poptheballoon";
+      // Redirect to Punctuation game
+      window.location.href = "/games/punctuation";
     });
   }
 
